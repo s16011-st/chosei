@@ -1,0 +1,33 @@
+body {
+	padding : 10px;
+
+}
+h3 {
+	line-height : 50%;
+}
+h1 {
+	line-height : 80%;
+}
+select {
+	padding : 3px 7px;
+	text-align : center;
+}
+input {
+	padding : 5px 10px;
+	text-align : center;
+}
+table {
+	border-collapse : collapse;
+	border : 3px solid #070;
+}
+th,td {
+	border : 1px solid #070;
+	text-align : center;
+	height : 30px;
+}
+td {
+	height : 40px;
+}
+th {
+	background-color : #ddd;
+}

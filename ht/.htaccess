@@ -1,0 +1,7 @@
+#<Directory "/var/www/html/flight16011/member">
+	AuthType Digest
+	AuthUserFile /var/www/html/flight16011/member/.htdigest
+	AuthName "Resricted Area"
+	Require valid-user
+#</Directory>
+
