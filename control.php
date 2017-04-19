@@ -4,6 +4,13 @@ var_dump( $_POST['event_name'] );
 var_dump( $_POST['dates'] );
 var_dump( $_POST['comment'] );
 
+$text1 = $_POST['dates'];      // テキストエリアの値
+$cr = array("\r\n", "\r");   // 改行コード置換用配列
+$text1 = trim($text);         // 文頭文末の空白を削除
+$text1 = str_replace($cr, "\n", $text1);  // 改行コードを統一
+$lines1 = explode("\n", $text1);
+var_dump( $lines1 );
+
 $text = $_POST['dates'];      // テキストエリアの値
 $cr = array("\r\n", "\r");   // 改行コード置換用配列
 $text = trim($text);         // 文頭文末の空白を削除
