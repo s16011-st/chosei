@@ -11,12 +11,12 @@ $text1 = str_replace($cr, "\n", $text1);  // 改行コードを統一
 $lines1 = explode("\n", $text1);
 var_dump( $lines1 );
 
-$text = $_POST['dates'];      // テキストエリアの値
+$text2 = $_POST['dates'];      // テキストエリアの値
 $cr = array("\r\n", "\r");   // 改行コード置換用配列
-$text = trim($text);         // 文頭文末の空白を削除
-$text = str_replace($cr, "\n", $text);  // 改行コードを統一
-$lines = explode("\n", $text);
-var_dump( $lines );
+$text2 = trim($text2);         // 文頭文末の空白を削除
+$text2 = str_replace($cr, "\n", $text2);  // 改行コードを統一
+$lines2 = explode("\n", $text2);
+var_dump( $lines2 );
 ?>
 </body></html>
 <!--
