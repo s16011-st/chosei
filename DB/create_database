@@ -1,12 +1,12 @@
-/* OSS構成特論総合演習課題用データベース定義 */
+/* 日程調整Webアプリ用データベース定義 */
 
-DROP DATABASE flight_db;
-DROP USER 'reservation'@'localhost';
+DROP DATABASE chosei_db;
+DROP USER 'bteam'@'localhost';
 
-CREATE DATABASE flight_db CHARACTER SET UTF8;
-USE flight_db;
+CREATE DATABASE chosei_db CHARACTER SET UTF8;
+USE chosei_db;
 
-/* フライト便情報テーブル */
+/* イベント作成テーブル */
 CREATE TABLE flight_master (
 	flight_id INTEGER NOT NULL PRIMARY KEY,		/* 便ID */
 	flight_name CHAR(20),				/* 便名 */
@@ -36,5 +36,5 @@ CREATE TABLE flight_reservation (
 );
 
 /* ユーザ宣言 */
-CREATE USER 'reservation'@'localhost' IDENTIFIED BY 'kickickic';
-GRANT ALL ON flight_db.* TO  'reservation'@'localhost' IDENTIFIED BY 'kickickic';
+CREATE USER 'bteam'@'localhost' IDENTIFIED BY 'kickobe';
+GRANT ALL ON flight_db.* TO  'bteam'@'localhost' IDENTIFIED BY 'kickobe';

@@ -1,5 +1,27 @@
 <?php
-//ステートメントオブジェクトから連想配列でごっそり値を取ってくる自作関数
+
+//（1）ランダムな変数を生成する2通りの方法
+function randomId(){
+	$bytes = openssl_random_pseudo_bytes( 8, $cstrong );
+	$hex = bin2hex( $bytes );	//ランダムなバイナリコードを16進数に変換
+	return $hex;
+}
+function randomId2(){
+	$md5 = md5( date( "YmdD His" ) );	//日時からハッシュ値を生成
+	$str = substr( $md5, 0, 10 );
+	echo $str;
+}
+
+//（2）テキストを配列に変える
+function textToArray( $text ) {
+	$cr = array("\r\n", "\r");   // 改行コード置換用配列
+	$text = trim($text);         // 文頭文末の空白を削除
+	$text = str_replace($cr, "\n", $text);  // 改行コードを統一
+	$array = explode("\n", $text);
+	return $array;
+}
+
+//ステートメントオブジェクトから連想配列で値を取り出す
 function fetch_all(& $stmt) {
 	$hits = array();
 	$params = array();
@@ -18,21 +40,14 @@ function fetch_all(& $stmt) {
 	return $hits;
 }
 
-function getList( $year, $month, $day, $flight_name ) {
- 	$mysqli = new mysqli( 	'localhost', 'reservation', 'kickickic',
-							'flight_db' );
+function makeTable( $event_id, $date ) {
+ 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
 	$sql = '
-	SELECT
-		flight_reservation.seat_class,
-		flight_reservation.customer_id,
-		customer_master.customer_name
-	FROM
-		flight_reservation,customer_master,flight_master
-	WHERE
-		flight_reservation.customer_id = customer_master.customer_id
-		and flight_reservation.flight_id = flight_master.flight_id
-		and year=? and month=? and day=?
-		and flight_master.flight_name=? ';
+	CREATE TABLE
+		t_chosei( $date )
+	VALUES(
+
+		)';
 
 	$stmt = $mysqli->prepare( $sql );
 	$stmt->bind_param( 'iiis', $year, $month, $day, $flight_name );

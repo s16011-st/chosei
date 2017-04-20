@@ -1,7 +1,6 @@
-#<Directory "/var/www/html/flight16011/member">
+#<Directory "/var/www/html/chosei/member">
 	AuthType Digest
-	AuthUserFile /var/www/html/flight16011/member/.htdigest
+	AuthUserFile /var/www/html/chosei/member/.htdigest
 	AuthName "Resricted Area"
 	Require valid-user
 #</Directory>
-
