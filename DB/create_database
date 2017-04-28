@@ -7,34 +7,29 @@ CREATE DATABASE chosei_db CHARACTER SET UTF8;
 USE chosei_db;
 
 /* イベント作成テーブル */
-CREATE TABLE flight_master (
-	flight_id INTEGER NOT NULL PRIMARY KEY,		/* 便ID */
-	flight_name CHAR(20),				/* 便名 */
-	departure_place CHAR(100),			/* 出発地 */
-	arrival_place CHAR(100),					/* 到着地 */
-	time CHAR(20),					/* 出発時刻 */
-	cap_business INTEGER,				/* 座席数（ビジネス） */
-	cap_economy INTEGER				/* 座席数（エコノミー） */
+CREATE TABLE t_event (
+	event_id CHAR(50) NOT NULL PRIMARY KEY,		/* イベントID（セッションIDを使う） */
+	cookie_id CHAR(50) NOT NULL PRIMARY KEY,	/* 幹事判別 */
+	name CHAR(50),			/* 幹事が決めたイベント名 */
+	memo CHAR(250)			/* 幹事から参加者へのコメント */
 );
 
 /* 顧客テーブル */
-CREATE TABLE customer_master (
-	customer_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,	/* 顧客番号 */
-	password CHAR(100),				/* パスワード */
-	customer_name CHAR(100)				/* 氏名 */
+CREATE TABLE t_schedule (
+	event_id CHAR(50) NOT NULL PRIMARY KEY,		/* t_eventのevent_idを外部キーに持つ */
+	day_time CHAR(50)		/* 幹事が決めた日にち候補 */
 );
 
 /* 予約テーブル */
 CREATE TABLE flight_reservation (
-	reservation_id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,	/* 予約ID */
-	year INTEGER,					/* 年 */
-	month INTEGER,					/* 月 */
-	day INTEGER,					/* 日 */
-	customer_id INTEGER,				/* 顧客番号 */
-	flight_id INTEGER,				/* 便ID */
-	seat_class INTEGER				/* 座席クラス　0：ビジネス 1：エコノミー */
+	event_id CHAR(50) NOT NULL PRIMARY KEY,				/* t_eventのevent_idを外部キーに持つ */
+	user_id CHAR(50) AUTO INCRIMENT PRIMARY KEY,	/* 参加者の識別ID */
+	user_name char(50),	/* 参加者の表示名 */
+	day_time INTEGER,		/* t_scheduleのday_timeの外部キー */
+	tsugo INTEGER,			/* 都合を数字で保存　2:◯ 1:△ 0:✕ */
+	comment CHAR(250)		/* 参加者からのコメント */
 );
 
 /* ユーザ宣言 */
 CREATE USER 'bteam'@'localhost' IDENTIFIED BY 'kickobe';
-GRANT ALL ON flight_db.* TO  'bteam'@'localhost' IDENTIFIED BY 'kickobe';
+GRANT ALL ON chosei_db.* TO  'bteam'@'localhost' IDENTIFIED BY 'kickobe';
