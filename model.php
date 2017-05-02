@@ -1,6 +1,6 @@
 <?php
 
-//（1）ランダムな変数を生成する2通りの方法
+//（A）ランダムな変数を生成する2通りの方法
 function randomId(){
 	$bytes = openssl_random_pseudo_bytes( 8, $cstrong );
 	$hex = bin2hex( $bytes );	//ランダムなバイナリコードを16進数に変換
@@ -12,7 +12,7 @@ function randomId2(){
 	echo $str;
 }
 
-//（2）テキストを配列に変える
+//（A）テキストを配列に変える
 function textToArray( $text ) {
 	$cr = array("\r\n", "\r");   // 改行コード置換用配列
 	$text = trim($text);         // 文頭文末の空白を削除
@@ -21,7 +21,83 @@ function textToArray( $text ) {
 	return $array;
 }
 
-//ステートメントオブジェクトから連想配列で値を取り出す
+//(A)新規日程調整ページ作成
+function organizeEvent( $e_id, $organizer_id, $e_name, $e_comment ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = 'INSERT INTO t_event VALUES( ?, ?, ?, ? )';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 'ssss', $e_id, $organizer_id, $e_name, $e_comment );
+	if( $stmt->execute() ) {
+		$result = "OK!";
+	} else {
+		$result = "ERROR！";
+	}
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+//(A→B)新規日にち候補登録
+function organizeDayTime( $e_id, $day_time ){
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = 'INSERT INTO t_schedule( e_id, day_time ) VALUES( ?, ? )';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 'ss', $e_id, $day_time );
+	if( $stmt->execute() ) {
+		$result = "日程調整ページ作成完了<br>イベントIDは".$e_id."<br>";
+	} else {
+		$result = "ERROR";
+	}
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+//(C→D,CDE→F)登録されているイベント情報を渡す
+function getEventData( $e_id ) {
+ 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = 'SELECT * FROM t_event WHERE e_id = ?';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 's', $e_id );
+	$stmt->execute();
+	$result = fetch_all( $stmt );
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+//(C→D,CDE→F)登録されているイベントの日にち情報を渡す
+function getEventDaytime( $e_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = 'SELECT * FROM t_schedule WHERE e_id = ?';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 's', $e_id );
+	$stmt->execute();
+	$result = fetch_all( $stmt );
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+//(D-F将来的にはCも)出欠都合の集計
+function countParticipant( $e_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = '
+	SELECT x.day_time,
+		count( y.tsugo=2 or null ) as "maru",
+		count( y.tsugo=1 or null ) as "sankaku",
+		count( y.tsugo=0 or null ) as "batsu"
+	FROM t_schedule x LEFT OUTER JOIN t_tsugo y
+	ON x.s_id = y.s_id
+	WHERE x.e_id = ?
+	GROUP BY x.day_time';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 's', $e_id );
+	$stmt->execute();
+	$result = fetch_all( $stmt );
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+//(allFunction)ステートメントオブジェクトから連想配列で値を取り出す
 function fetch_all(& $stmt) {
 	$hits = array();
 	$params = array();
@@ -39,25 +115,6 @@ function fetch_all(& $stmt) {
 	}
 	return $hits;
 }
-
-function makeTable( $event_id, $date ) {
- 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
-	$sql = '
-	CREATE TABLE
-		t_chosei( $date )
-	VALUES(
-
-		)';
-
-	$stmt = $mysqli->prepare( $sql );
-	$stmt->bind_param( 'iiis', $year, $month, $day, $flight_name );
-	$stmt->execute();
-	$result = fetch_all( $stmt );
-	return $result;
-	$stmt->close();
-	$mysqli->close();
-}
-
 
 function getResv( $year, $month, $day, $departure, $arrival ) {
     $mysqli = new mysqli( 'localhost', 'reservation', 'kickickic', 'flight_db' );

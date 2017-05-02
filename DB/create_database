@@ -8,28 +8,37 @@ USE chosei_db;
 
 /* イベント作成テーブル */
 CREATE TABLE t_event (
-	event_id CHAR(50) NOT NULL,		/* イベントID（セッションIDを使う） */
-	cookie_id CHAR(50) NOT NULL,	/* 幹事判別 */
-	name CHAR(50),			/* 幹事が決めたイベント名 */
-	memo CHAR(250),			/* 幹事から参加者へのコメント */
-	PRIMARY KEY( event_id, cookie_id )
+	e_id CHAR(50) NOT NULL PRIMARY KEY,	/* イベントID（乱数） */
+	organaizer_id CHAR(50) NOT NULL,				/* 幹事判別 */
+	e_name CHAR(50) NOT NULL,		/* 幹事が決めたイベント名 */
+	e_comment CHAR(250)	/* 幹事から参加者へのコメント */
 );
 
-/* 顧客テーブル */
+/* 日にち候補テーブル */
 CREATE TABLE t_schedule (
-	event_id CHAR(50) NOT NULL PRIMARY KEY,		/* t_eventのevent_idを外部キーに持つ */
-	day_time CHAR(50)		/* 幹事が決めた日にち候補 */
+	s_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,	/* 日にち候補識別番号 */
+	e_id CHAR(50) NOT NULL,	/* t_eventのe_idの外部キー */
+	day_time CHAR(50) NOT NULL,	/* 幹事が決めた日にち候補 */
+	FOREIGN KEY( e_id ) REFERENCES t_event ( e_id )
 );
 
-/* 予約テーブル */
-CREATE TABLE flight_reservation (
-	event_id CHAR(50) NOT NULL,				/* t_eventのevent_idを外部キーに持つ */
-	user_id INTEGER AUTO_INCREMENT,	/* 参加者の識別ID */
-	user_name char(50),	/* 参加者の表示名 */
-	day_time INTEGER,		/* t_scheduleのday_timeの外部キー */
-	tsugo INTEGER,			/* 都合を数字で保存　2:◯ 1:△ 0:✕ */
-	comment CHAR(250),		/* 参加者からのコメント */
-	PRIMARY KEY( event_id, user_id )
+/* 参加者基本情報テーブル */
+CREATE TABLE t_participant(
+	p_id INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,	/* 参加者の識別ID */
+	p_name char(50),							/* 参加者の表示名 */
+	p_comment CHAR(250),											/* 参加者からのコメント */
+	e_id CHAR(50) NOT NULL,							/* t_eventのe_idを外部キーに持つ */
+	FOREIGN KEY( e_id ) REFERENCES t_event ( e_id )
+);
+
+/* 参加者都合テーブル */
+CREATE TABLE t_tsugo(
+	s_id INTEGER NOT NULL,			/* 日にち候補識別番号 */
+	p_id INTEGER NOT NULL,	/* 参加者の識別ID */
+	tsugo INTEGER,		/* 都合を数字で保存　2:◯ 1:△ 0:✕ */
+	PRIMARY KEY( s_id, p_id ),
+	FOREIGN KEY( s_id ) REFERENCES t_schedule ( s_id ),
+	FOREIGN KEY( p_id ) REFERENCES t_participant ( p_id )
 );
 
 /* ユーザ宣言 */

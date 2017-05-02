@@ -2,11 +2,14 @@ body {
 	padding : 10px;
 
 }
+p {
+	line-height : 175%;
+}
 h3 {
 	line-height : 50%;
 }
 h1 {
-	line-height : 80%;
+	line-height : 120%;
 }
 select {
 	padding : 3px 7px;
@@ -14,7 +17,6 @@ select {
 }
 input {
 	padding : 5px 10px;
-	text-align : center;
 }
 table {
 	border-collapse : collapse;
