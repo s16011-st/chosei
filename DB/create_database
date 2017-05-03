@@ -8,10 +8,11 @@ USE chosei_db;
 
 /* イベント作成テーブル */
 CREATE TABLE t_event (
-	event_id CHAR(50) NOT NULL PRIMARY KEY,		/* イベントID（セッションIDを使う） */
-	cookie_id CHAR(50) NOT NULL PRIMARY KEY,	/* 幹事判別 */
+	event_id CHAR(50) NOT NULL,		/* イベントID（セッションIDを使う） */
+	cookie_id CHAR(50) NOT NULL,	/* 幹事判別 */
 	name CHAR(50),			/* 幹事が決めたイベント名 */
-	memo CHAR(250)			/* 幹事から参加者へのコメント */
+	memo CHAR(250),			/* 幹事から参加者へのコメント */
+	PRIMARY KEY( event_id, cookie_id )
 );
 
 /* 顧客テーブル */
@@ -22,12 +23,13 @@ CREATE TABLE t_schedule (
 
 /* 予約テーブル */
 CREATE TABLE flight_reservation (
-	event_id CHAR(50) NOT NULL PRIMARY KEY,				/* t_eventのevent_idを外部キーに持つ */
-	user_id CHAR(50) AUTO INCRIMENT PRIMARY KEY,	/* 参加者の識別ID */
+	event_id CHAR(50) NOT NULL,				/* t_eventのevent_idを外部キーに持つ */
+	user_id INTEGER AUTO_INCREMENT,	/* 参加者の識別ID */
 	user_name char(50),	/* 参加者の表示名 */
 	day_time INTEGER,		/* t_scheduleのday_timeの外部キー */
 	tsugo INTEGER,			/* 都合を数字で保存　2:◯ 1:△ 0:✕ */
-	comment CHAR(250)		/* 参加者からのコメント */
+	comment CHAR(250),		/* 参加者からのコメント */
+	PRIMARY KEY( event_id, user_id )
 );
 
 /* ユーザ宣言 */
