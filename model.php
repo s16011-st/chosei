@@ -14,10 +14,9 @@ function randomId2(){
 
 //（A）テキストを配列に変える
 function textToArray( $text ) {
-	$cr = array("\r\n", "\r");   // 改行コード置換用配列
-	$text = trim($text);         // 文頭文末の空白を削除
-	$text = str_replace($cr, "\n", $text);  // 改行コードを統一
-	$array = explode("\n", $text);
+// 2つ以上の3種類の改行を1つ1種類の改行に置換後、文頭文末の空白を削除
+	$text = trim( preg_replace( "/(\r\n){2,}|\r{2,}|\n{2,}/", "\n", $text ) );
+	$array = explode("\n", $text);	//改行区切りで配列に格納
 	return $array;
 }
 
@@ -76,14 +75,14 @@ function getEventDaytime( $e_id ) {
 	$stmt->close();
 	$mysqli->close();
 }
-//(D-F将来的にはCも)出欠都合の集計
+//(C,D)出欠都合の集計
 function countParticipant( $e_id ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
 	$sql = '
 	SELECT x.day_time,
-		count( y.tsugo=2 or null ) as "maru",
-		count( y.tsugo=1 or null ) as "sankaku",
-		count( y.tsugo=0 or null ) as "batsu"
+		count( y.tsugo=2 or null ) as "◯",
+		count( y.tsugo=1 or null ) as "△",
+		count( y.tsugo=0 or null ) as "✕"
 	FROM t_schedule x LEFT OUTER JOIN t_tsugo y
 	ON x.s_id = y.s_id
 	WHERE x.e_id = ?
@@ -93,6 +92,160 @@ function countParticipant( $e_id ) {
 	$stmt->execute();
 	$result = fetch_all( $stmt );
 	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+//(C→D)そのイベントの参加者の都合を取得
+function getParticipantTsugo( $e_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = '
+	SELECT
+	z.p_id, z.p_name, x.day_time, y.tsugo, z.p_comment
+	FROM
+	( t_schedule x LEFT OUTER JOIN t_tsugo y USING(s_id))
+	INNER JOIN t_participant z USING(p_id)
+	WHERE x.e_id = ?
+	ORDER BY z.p_id, x.day_time, y.tsugo';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 's', $e_id );
+	$stmt->execute();
+	$result = fetch_all( $stmt );
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+//(D→C)参加者登録
+function pRegistration( $p_name, $p_comment, $e_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = ' INSERT INTO t_participant( p_name, p_comment, e_id ) VALUES( ?, ?, ? )';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 'sss', $p_name, $p_comment, $e_id );
+	if( $stmt->execute() ) {
+		$result = "参加者登録完了";
+	} else {
+		$result = "参加者登録エラー！！！";
+	}	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+//(D→C)今登録した参加者のp_id取得
+function getLastPid() {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = 'SELECT p_id FROM t_participant ORDER BY p_id DESC LIMIT 1';
+	$stmt = $mysqli->prepare( $sql );
+//	$stmt->bind_param();
+	$stmt->execute();
+	$result = fetch_all( $stmt );
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+//(D→C)いま登録した参加者の都合を登録
+function entryLastPidConvenience( $s_id, $p_id, $tsugo ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = ' INSERT INTO t_tsugo( s_id, p_id, tsugo ) VALUES( ?, ?, ? )';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 'ssi', $s_id, $p_id, $tsugo );
+	if( $stmt->execute() ) {
+		$result = "都合登録完了";
+	} else {
+		$result = "都合登録エラー！！！";
+	}	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+//(D→E)その参加者の都合を取得
+function getTheParticipantTsugo( $e_id, $p_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = '
+	SELECT
+	z.p_id, z.p_name, x.day_time, y.tsugo, z.p_comment
+	FROM
+	( t_schedule x LEFT OUTER JOIN t_tsugo y USING(s_id))
+	INNER JOIN t_participant z USING(p_id)
+	WHERE x.e_id = ? and y.p_id = ?
+	ORDER BY z.p_id, x.day_time, y.tsugo';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 'si', $e_id, $p_id );
+	$stmt->execute();
+	$result = fetch_all( $stmt );
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+//(E→C)参加者情報を削除
+function deleteParticipant( $p_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = 'DELETE FROM t_participant WHERE p_id = ?';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 'i', $p_id );
+	if( $stmt->execute() ) {
+		$result = "削除完了";
+	} else {
+		$result = "削除エラー！！！";
+	}	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+//(E→C)参加者都合を削除
+function deleteTsugo( $p_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = 'DELETE FROM t_tsugo WHERE p_id = ?';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 'i', $p_id );
+	if( $stmt->execute() ) {
+		$result = "削除完了";
+	} else {
+		$result = "削除エラー！！！";
+	}	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+//(E→C)その参加者の情報更新
+function updateParticipant( $p_id, $p_name, $p_comment ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = 'UPDATE t_participant SET p_name = ?, p_comment = ? WHERE p_id = ?';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 'ssi', $p_name, $p_comment, $p_id );
+	if( $stmt->execute() ) {
+		$result = "更新完了";
+	} else {
+		$result = "更新エラー！！！";
+	}	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+//(E→C)その参加者の都合更新
+function updateTsugo( $s_id, $p_id, $tsugo ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = 'UPDATE t_tsugo SET tsugo = ? WHERE s_id = ? and p_id = ?';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 'iii', $tsugo, $s_id, $p_id );
+	if( $stmt->execute() ) {
+		$result = "都合更新完了";
+	} else {
+		$result = "都合更新エラー！！！";
+	}	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+//(F→C)イベント情報の更新
+function updateEvent( $e_id, $new_e_name, $new_e_comment ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = 'UPDATE t_event SET e_name = ?, e_comment = ? WHERE e_id = ?';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 'ssi', $e_name, $e_comment, $e_id );
+	if( $stmt->execute() ) {
+		$result = "更新完了";
+	} else {
+		$result = "更新エラー！！！";
+	}	return $result;
 	$stmt->close();
 	$mysqli->close();
 }
@@ -115,68 +268,3 @@ function fetch_all(& $stmt) {
 	}
 	return $hits;
 }
-
-function getResv( $year, $month, $day, $departure, $arrival ) {
-    $mysqli = new mysqli( 'localhost', 'reservation', 'kickickic', 'flight_db' );
-    $sql = '
-	SELECT
-		flight_master.flight_id,flight_master.flight_name,flight_master.time,
-		count( ( year=? and month=? and day=?
-			and flight_reservation.seat_class=0 ) or null ) as business,
-		count( ( year=? and month=? and day=?
-    		and flight_reservation.seat_class=1 ) or null ) as economy
-	FROM
-		flight_master inner join flight_reservation on
-		flight_master.flight_id = flight_reservation.flight_id
-	WHERE
-		departure_place=? and arrival_place=?
-	GROUP BY flight_master.flight_name';
-
-	$stmt = $mysqli->prepare( $sql );
-	$stmt->bind_param( 'iiiiiiss',
-		$year, $month, $day, $year, $month, $day, $departure, $arrival );
-	$stmt->execute();
-	$result = fetch_all( $stmt );
-	return $result;
-	$stmt->close();
-	$mysqli->close();
-}
-
-
-function putResv( $year,$month, $day, $customer_id, $flight_id, $seat_class ) {
-    $mysqli = new mysqli( 'localhost', 'reservation', 'kickickic', 'flight_db' );
-    $sql = '
-	INSERT INTO	flight_reservation(
-		year, month, day, customer_id, flight_id, seat_class )
-	VALUES( ?, ?, ?, ?, ?, ? ) ';
-	$stmt = $mysqli->prepare( $sql );
-	$stmt->bind_param( 'iiiiii',
-		$year, $month, $day, $customer_id, $flight_id, $seat_class );
-	if( $stmt->execute() ) {
-		$result = "予約完了しました";
-	} else {
-		$result = "ERROR";
-	}
-	return $result;
-	$stmt->close();
-	$mysqli->close();
-}
-
-function registMem( $customer_id, $password, $customer_name ) {
-    $mysqli = new mysqli( 'localhost', 'reservation', 'kickickic', 'flight_db' );
-    $sql = '
-    INSERT INTO customer_master VALUES( ?, ?, ? ) ';
-    $stmt = $mysqli->prepare( $sql );
-    $stmt->bind_param( 'iss', $customer_id, $password, $customer_name );
-    if( $stmt->execute() ) {
-        $result = "顧客登録完了";
-    } else {
-        $result = "登録エラー";
-    }
-    return $result;
-    $stmt->close();
-    $mysqli->close();
-
-}
-
-?>

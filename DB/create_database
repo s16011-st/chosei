@@ -9,7 +9,7 @@ USE chosei_db;
 /* イベント作成テーブル */
 CREATE TABLE t_event (
 	e_id CHAR(50) NOT NULL PRIMARY KEY,	/* イベントID（乱数） */
-	organaizer_id CHAR(50) NOT NULL,				/* 幹事判別 */
+	organizer_id CHAR(50) NOT NULL,				/* 幹事判別 */
 	e_name CHAR(50) NOT NULL,		/* 幹事が決めたイベント名 */
 	e_comment CHAR(250)	/* 幹事から参加者へのコメント */
 );
@@ -35,7 +35,7 @@ CREATE TABLE t_participant(
 CREATE TABLE t_tsugo(
 	s_id INTEGER NOT NULL,			/* 日にち候補識別番号 */
 	p_id INTEGER NOT NULL,	/* 参加者の識別ID */
-	tsugo INTEGER,		/* 都合を数字で保存　2:◯ 1:△ 0:✕ */
+	tsugo INTEGER NOT NULL,		/* 都合　(◯ △ ✕) */
 	PRIMARY KEY( s_id, p_id ),
 	FOREIGN KEY( s_id ) REFERENCES t_schedule ( s_id ),
 	FOREIGN KEY( p_id ) REFERENCES t_participant ( p_id )
