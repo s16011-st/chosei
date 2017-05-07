@@ -1,10 +1,10 @@
 <?php
 	session_start();
-	$e_id = $_GET['e_id'];
 	$e_data = $_SESSION['e_data'];
 	$day_time = $_SESSION['day_time'];
 	$p_sum = $_SESSION['p_sum'];
 	$p_tsugo = $_SESSION['p_tsugo'];
+	$p_t_tsugo = $_SESSION['p_t_tsugo'];	//編集する参加者の情報・都合
 	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
 
 //登録者なしのときは値がない（NULL）ので、0を格納する
@@ -22,22 +22,15 @@
 				$p_tsugo[$i]["tsugo"] = "✕";
 			}
 		}
-
 	}
-//	var_dump($p_tsugo);
 ?>
 <HTML>
 <HEAD>
-	<TITLE>出欠都合新規入力</TITLE>
+	<TITLE>出欠都合更新</TITLE>
 	<LINK href="./style.css" rel="stylesheet" type="text/css">
 </HEAD>
 <BODY>
-	<?php if( $_COOKIE[$e_id] === $e_data[0]["organizer_id"] ) { ?>
-		あなたが幹事のイベントです。
-		<input type="button" onclick="location.href='./CFc.php?e_id=<?php echo $e_id; ?>'" value="イベント編集" >
-	<?php } ?>
-
-	<br><br>回答者数：<?php echo $ninzu; ?>人
+	回答者数：<?php echo $ninzu; ?>人
 	<h1><?php echo $e_data[0]["e_name"]; ?></h1>
 
 <div class="float">
@@ -91,8 +84,7 @@
 			<tr>
 <!-- 参加者の名前にe_idと参加者各々のp_idをつけて./CEc.phpに飛べるリンクを張る-->
 				<td class = "colparticipant">
-					<a href = "./DEc.php?e_id=<?php echo $e_data[0]["e_id"]; ?>
-						&p_id=<?php echo $p_tsugo[$i]["p_id"]; ?>" >
+					<a href = "./DEc.php?e_id=<?php echo $e_data[0]["e_id"]; ?>&p_id=<?php echo $p_tsugo[$i]["p_id"]; ?>" >
 						<?php echo $p_tsugo[$i]["p_name"]; ?>
 					</a>
 				</td>
@@ -109,12 +101,12 @@
 </div>
 
 <div class="float">
-	<h3>出欠を入力する</h3>
+	<h3><?php echo $p_t_tsugo[0]["p_name"]; ?>さんの出欠を編集</h3>
 	<hr>
-	<FORM action="./DCc.php?e_id=<?php echo $e_id; ?>" method="post">
+	<FORM action="./ECc.php?e_id=<?php echo $_GET['e_id']; ?>&p_id=<?php echo $_GET['p_id']; ?>&proc=1" method="post">
 	<h3>表示名</h3>
 	表示に使用する名前を入力してください。<br>
-		<input type="text" name="p_name" required><br><br>
+		<input type="text" name="p_name" value="<?php echo $p_t_tsugo[0]["p_name"]; ?>" required><br><br>
 	<h3>日にち候補</h3>
 	<table>
 		<tr>
@@ -143,14 +135,14 @@
 			<?php } ?>
 		</tr>
 	</table><br>
+	<h3>コメント</h3>
+		<textarea name="p_comment"><?php echo $p_t_tsugo[0]["p_comment"] ; ?></textarea><br><br>
+		<INPUT type="submit" value="更新する">
+	</FORM>
 </div>
 
 <div class="float">
-	<h3>コメント</h3>
-		<textarea name="p_comment" ></textarea><br><br>
-		<INPUT type="submit" value="入力する">
-	</FORM>
-
+	<input type="button" onclick='location.href="./ECc.php?e_id=<?php echo $_GET['e_id']; ?>&p_id=<?php echo $_GET['p_id']; ?>&proc=2"' value=登録を削除 />
 </div>
 
 </BODY>
