@@ -1,5 +1,6 @@
 <html>
 <head>
+	<TITLE>イベント作成</TITLE>
 	<LINK href="./style.css" rel="stylesheet" type="text/css">
 </head>
 <body>

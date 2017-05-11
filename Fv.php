@@ -2,12 +2,15 @@
 	session_start();
 	$e_id = $_GET['e_id'];
 	$e_data = $_SESSION['e_data'];
+	if( $e_id !== $e_data[0]['e_id'] ) {
+		header( 'Location: ./Hv.php' );
+	}
 	$day_time = $_SESSION['day_time'];
-
 ?>
 
 <html>
 <head>
+	<TITLE>日程調整ページ編集画面</TITLE>
 	<LINK href="./style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -24,15 +27,19 @@
 
 <div class="float">
 	<h3>候補日程の追加と削除</h3>
+
+
 	<h4>削除する候補</h4>
 	削除したい候補にチェックを付けてください。<br>
 	&emsp;削除&emsp;現在の日程<br>
 	<div  class= "delete_day_time">
 		<?php for( $i=0; $i<count($day_time); $i++ ) { ?>
-			&emsp;<input type="checkbox" name="delete_no<?php echo $i; ?>" value="<?php echo $day_time[$i]['s_id']; ?>" >
+			&emsp;<input type="checkbox" name="delete_s_id[]" value="<?php echo $day_time[$i]['s_id']; ?>" >
 			&emsp;&emsp;<?php echo $day_time[$i]['day_time']."<br>"; ?>
 		<?php } ?>
 	</div>
+
+
 	<h4>追加する候補</h4>
 	追加したい候補を入力してください。<br>
 	<textarea name="new_dates" ></textarea><br><br>
@@ -40,6 +47,7 @@
 	<input type="button" onclick="location.href='./Cv.php?e_id=<?php echo $e_id; ?>'" value="戻る" >
 	<input type="submit" value="編集内容を保存" ><br><br><br>
 </div>
+
 
 <div class="float">
 	<h3>イベントの削除<h3>

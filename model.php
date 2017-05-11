@@ -16,7 +16,8 @@ function randomId2(){
 function textToArray( $text ) {
 // 2つ以上の3種類の改行を1つ1種類の改行に置換後、文頭文末の空白を削除
 	$text = trim( preg_replace( "/(\r\n){2,}|\r{2,}|\n{2,}/", "\n", $text ) );
-	$array = explode("\n", $text);	//改行区切りで配列に格納
+//改行区切りで配列に格納し、「なにもない配列」が入ってる（改行だけの入力）場合をNULLにする
+	$array = array_filter( explode("\n", $text) );
 	return $array;
 }
 
@@ -66,7 +67,7 @@ function getEventData( $e_id ) {
 //(C→D,CDE→F)登録されているイベントの日にち情報を渡す
 function getEventDaytime( $e_id ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
-	$sql = 'SELECT * FROM t_schedule WHERE e_id = ?';
+	$sql = 'SELECT * FROM t_schedule WHERE e_id = ? ORDER BY s_id';
 	$stmt = $mysqli->prepare( $sql );
 	$stmt->bind_param( 's', $e_id );
 	$stmt->execute();
@@ -177,31 +178,24 @@ function getTheParticipantTsugo( $e_id, $p_id ) {
 	$mysqli->close();
 }
 
-//(E→C)参加者情報を削除
-function deleteParticipant( $p_id ) {
+
+//(E→C)参加者都合→参加者情報の順に削除
+function deleteParticipantTsugo( $p_id ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
-	$sql = 'DELETE FROM t_participant WHERE p_id = ?';
-	$stmt = $mysqli->prepare( $sql );
+	$sql1 = 'DELETE FROM t_tsugo WHERE p_id = ?';
+	$sql2 = 'DELETE FROM t_participant WHERE p_id = ?';
+	$stmt = $mysqli->prepare( $sql1 );
 	$stmt->bind_param( 'i', $p_id );
 	if( $stmt->execute() ) {
-		$result = "削除完了";
-	} else {
-		$result = "削除エラー！！！";
-	}	return $result;
-	$stmt->close();
-	$mysqli->close();
-}
-//(E→C)参加者都合を削除
-function deleteTsugo( $p_id ) {
-	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
-	$sql = 'DELETE FROM t_tsugo WHERE p_id = ?';
-	$stmt = $mysqli->prepare( $sql );
-	$stmt->bind_param( 'i', $p_id );
-	if( $stmt->execute() ) {
-		$result = "削除完了";
-	} else {
-		$result = "削除エラー！！！";
-	}	return $result;
+		$stmt = $mysqli->prepare( $sql2 );
+		$stmt->bind_param( 'i', $p_id );
+		if( $stmt->execute() ) {
+			$result = "削除完了";
+		} else {
+			$result = "削除エラー！！！";
+		}
+	}
+	return $result;
 	$stmt->close();
 	$mysqli->close();
 }
@@ -240,12 +234,67 @@ function updateEvent( $e_id, $new_e_name, $new_e_comment ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
 	$sql = 'UPDATE t_event SET e_name = ?, e_comment = ? WHERE e_id = ?';
 	$stmt = $mysqli->prepare( $sql );
-	$stmt->bind_param( 'ssi', $e_name, $e_comment, $e_id );
+	$stmt->bind_param( 'ssi', $new_e_name, $new_e_comment, $e_id );
 	if( $stmt->execute() ) {
 		$result = "更新完了";
 	} else {
 		$result = "更新エラー！！！";
 	}	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+
+//(F→C)日にち候補の削除
+function deleteDayTime( $s_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql1 = 'DELETE FROM t_tsugo WHERE s_id = ?';
+	$sql2 = 'DELETE FROM t_schedule WHERE s_id = ? ';
+	$stmt = $mysqli->prepare( $sql1 );
+	$stmt->bind_param( 'i', $s_id );
+	if( $stmt->execute() ) {
+		$stmt = $mysqli->prepare( $sql2 );
+		$stmt->bind_param( 'i', $s_id );
+		if( $stmt->execute() ) {
+			$result = "削除完了";
+		} else {
+			$result = "削除エラー！！！";
+		}
+	}
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+
+//(F→G)イベントの削除
+function deleteEvent( $e_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql1 = 'DELETE FROM t_tsugo WHERE s_id IN
+	( SELECT s_id FROM t_participant WHERE e_id = ? ) ';
+	$sql2 = 'DELETE FROM t_participant WHERE e_id = ? ';
+	$sql3 = 'DELETE FROM t_schedule WHERE e_id = ? ';
+	$sql4 = 'DELETE FROM t_event WHERE e_id = ? ';
+	$stmt = $mysqli->prepare( $sql1 );
+	$stmt->bind_param( 's', $e_id );
+	if( $stmt->execute() ) {
+		$stmt = $mysqli->prepare( $sql2 );
+		$stmt->bind_param( 's', $e_id );
+		if( $stmt->execute() ) {
+			$stmt = $mysqli->prepare( $sql3 );
+			$stmt->bind_param( 's', $e_id );
+			if( $stmt->execute() ) {
+				$stmt = $mysqli->prepare( $sql4 );
+				$stmt->bind_param( 's', $e_id );
+				if( $stmt->execute() ) {
+					$result = "削除完了";
+				} else {
+					$result = "削除エラー！！！";
+				}
+			}
+		}
+	}
+	return $result;
 	$stmt->close();
 	$mysqli->close();
 }

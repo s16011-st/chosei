@@ -2,6 +2,9 @@
 	session_start();
 	$e_id = $_GET['e_id'];
 	$e_data = $_SESSION['e_data'];
+	if( $e_id !== $e_data[0]['e_id'] ) {
+		header( 'Location: ./Hv.php' );
+	}
 	$day_time = $_SESSION['day_time'];
 	$p_sum = $_SESSION['p_sum'];
 	$p_tsugo = $_SESSION['p_tsugo'];
@@ -32,10 +35,6 @@
 	<LINK href="./style.css" rel="stylesheet" type="text/css">
 </HEAD>
 <BODY>
-	<?php if( $_COOKIE[$e_id] === $e_data[0]["organizer_id"] ) { ?>
-		あなたが幹事のイベントです。
-		<input type="button" onclick="location.href='./CFc.php?e_id=<?php echo $e_id; ?>'" value="イベント編集" >
-	<?php } ?>
 
 	<br><br>回答者数：<?php echo $ninzu; ?>人
 	<h1><?php echo $e_data[0]["e_name"]; ?></h1>
@@ -77,6 +76,7 @@
 			?>
 		</tr>
 	</table><br>
+
 	<?php if( $ninzu!=0 ){ ?>
 		<table>
 			<tr>
