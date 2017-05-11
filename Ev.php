@@ -1,6 +1,10 @@
 <?php
 	session_start();
+	$e_id = $_GET['e_id'];
 	$e_data = $_SESSION['e_data'];
+	if( $e_id !== $e_data[0]['e_id'] ) {
+		header( 'Location: ./Hv.php' );
+	}
 	$day_time = $_SESSION['day_time'];
 	$p_sum = $_SESSION['p_sum'];
 	$p_tsugo = $_SESSION['p_tsugo'];
@@ -103,7 +107,7 @@
 <div class="float">
 	<h3><?php echo $p_t_tsugo[0]["p_name"]; ?>さんの出欠を編集</h3>
 	<hr>
-	<FORM action="./ECc.php?e_id=<?php echo $_GET['e_id']; ?>&p_id=<?php echo $_GET['p_id']; ?>&proc=1" method="post">
+	<FORM action="./ECc.php?e_id=<?php echo $e_id; ?>&p_id=<?php echo $_GET['p_id']; ?>&proc=1" method="post">
 	<h3>表示名</h3>
 	表示に使用する名前を入力してください。<br>
 		<input type="text" name="p_name" value="<?php echo $p_t_tsugo[0]["p_name"]; ?>" required><br><br>
@@ -142,7 +146,7 @@
 </div>
 
 <div class="float">
-	<input type="button" onclick='location.href="./ECc.php?e_id=<?php echo $_GET['e_id']; ?>&p_id=<?php echo $_GET['p_id']; ?>&proc=2"' value=登録を削除 />
+	<input type="button" onclick='location.href="./ECc.php?e_id=<?php echo $e_id; ?>&p_id=<?php echo $_GET['p_id']; ?>&proc=2"' value=登録を削除 />
 </div>
 
 </BODY>

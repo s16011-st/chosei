@@ -5,10 +5,12 @@
 	$e_name = $_POST['e_name'];
 	$e_comment = $_POST['e_comment'];
 	$day_time = textToArray( $_POST['dates'] );
-	setcookie( $e_id, $organizer_id, time()+10800 );
 	var_dump($day_time);
 
-	if( $e_name ) {
+
+	setcookie( $e_id, $organizer_id, time()+10800 );
+
+	if( $e_name && !empty($day_time) ) {
 		if(
 			organizeEvent( $e_id, $organizer_id, $e_name, $e_comment )
 		) {
@@ -18,7 +20,7 @@
 				organizeDayTime( $e_id, $day_time[$i] );
 			}
 		}
-	} else if( $day_time == "" ) {
+	} else {
 		$message = 'えらー。イベント名か日付が空白です。';
 		$url = '';
 	}

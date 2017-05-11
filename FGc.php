@@ -1,9 +1,10 @@
 <?php
 	include './model.php';
 	$e_id = $_GET['e_id'];
+	$result = deleteEvent( $e_id );
 
-
-
-	header( "Location: ./Gv.php" );
+	session_start();
+	$_SESSION['result'] = $result;
+	header( "Location: ./Gv.php");
 	exit();
 ?>

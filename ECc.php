@@ -26,10 +26,10 @@
 				$tsugo[$i]['s_id'], $tsugo[$i]['p_id'], $tsugo[$i]['tsugo']
 			);
 		}
+
 //削除の場合
-	} else if( $proc ==2 ){
-		deleteParticipant( $p_id );
-		deleteTsugo( $p_id );
+	} else if( $proc == 2 ) {
+		deleteParticipantTsugo( $p_id );
 	}
 
 

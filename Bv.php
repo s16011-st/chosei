@@ -6,6 +6,7 @@ $e_id = $_SESSION['e_id'];
 ?>
 <html>
 <head>
+	<TITLE>イベント作成完了</TITLE>
 	<LINK href="./style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -15,10 +16,13 @@ $e_id = $_SESSION['e_id'];
 <?php
 	echo $message."<br><br>";
 	echo $url."<br>";
+	if( !empty( $url ) ) {
 ?>
 <br>
 <input type="button" onclick='location.href="./BCc.php?e_id=<?php echo $e_id; ?>"' value=イベントページを表示 />
+<?php } ?>
 <br><br><br><br>
+
 <a href = "./Av.php">日程調整ページ作成画面に戻る</a>
 
 </body>
