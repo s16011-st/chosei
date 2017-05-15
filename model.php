@@ -1,4 +1,8 @@
 <?php
+//直接アクセスさせない
+if( array_shift( get_included_files() ) === __FILE__ ) {
+	die( 'エラー：　正しいURLを指定してください。' );
+}
 
 //（A）ランダムな変数を生成する2通りの方法
 function randomId(){
