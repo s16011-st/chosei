@@ -31,7 +31,7 @@
 <BODY>
 <?php if( $_COOKIE[$e_id] === $e_data[0]["organizer_id"] ) { ?>
 	あなたが幹事のイベントです。
-	<input type="button" onclick="location.href='./s.php?e_id=<?php echo $e_id."&proc=6"; ?>'" value="イベント編集" >
+	<input type="button" onclick='location.href="./s.php?e_id=<?php echo $e_id; ?>&proc=6"' value="イベント編集" >
 <?php } ?>
 
 <br><br>回答者数：<?php echo $ninzu; ?>人
