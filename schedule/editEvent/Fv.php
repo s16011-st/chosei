@@ -6,7 +6,7 @@
 <body>
 <h1>イベント編集・削除</h1>
 
-<FORM action="./editEvent.php?e_id=<?php echo $e_id; ?>" method="post">
+<FORM action="./edit.php?e_id=<?php echo $e_id; ?>&proc=7" method="post">
 <div class="float">
 	<h3>イベント名</h3>
 	<input type="text" name="new_e_name" value="<?php echo $e_data[0]['e_name']; ?>" required ><br><br>
@@ -34,7 +34,7 @@
 	追加したい候補を入力してください。<br>
 	<textarea name="new_dates" ></textarea><br><br>
 
-	<input type="button" onclick="location.href='./Cv.php?e_id=<?php echo $e_id; ?>'" value="戻る" >
+	<input type="button" onclick="location.href='../../Cv.php?e_id=<?php echo $e_id; ?>'" value="戻る" >
 	<input type="submit" value="編集内容を保存" ><br><br><br>
 </div>
 
@@ -42,7 +42,7 @@
 <div class="float">
 	<h3>イベントの削除<h3>
 	<h4 class="delete">イベントを削除する</h4>
-	<input type="button" onclick="location.href='./delete/delete.php?e_id=<?php echo $e_id; ?>'" value="イベント削除" >
+	<input type="button" onclick="location.href='./edit.php?e_id=<?php echo $e_id; ?>&proc=8'" value="イベント削除" >
 	<br>※一度削除すると復旧はできません。ご注意ください。
 </FORM>
 </div>
