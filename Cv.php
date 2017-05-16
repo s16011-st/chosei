@@ -1,13 +1,9 @@
 <?php
-	session_start();
-	$e_id = $_GET['e_id'];
-	$e_data = $_SESSION['e_data'];
-	if( $e_id !== $e_data[0]['e_id'] ) {
-		header( 'Location: ./Hv.php' );
+//includeで見せるだけで、直接アクセスさせない
+	if( array_shift( get_included_files() ) === __FILE__ ) {
+		die( 'エラー：　正しいURLを指定してください。' );
 	}
-	$day_time = $_SESSION['day_time'];
-	$p_sum = $_SESSION['p_sum'];
-	$p_tsugo = $_SESSION['p_tsugo'];
+
 	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
 //登録者なしのときは値がない（NULL）ので、0を格納する
 	if( !$ninzu ){
@@ -35,7 +31,7 @@
 <BODY>
 <?php if( $_COOKIE[$e_id] === $e_data[0]["organizer_id"] ) { ?>
 	あなたが幹事のイベントです。
-	<input type="button" onclick="location.href='./CFc.php?e_id=<?php echo $_GET['e_id']; ?>'" value="イベント編集" >
+	<input type="button" onclick="location.href='./s.php?e_id=<?php echo $e_id."&proc=6"; ?>'" value="イベント編集" >
 <?php } ?>
 
 <br><br>回答者数：<?php echo $ninzu; ?>人
@@ -90,10 +86,10 @@
 		</tr>
 		<?php for( $i=0; $i<$ninzu*count($day_time); $i=$i+count($day_time) ) { ?>
 		<tr>
-<!-- 参加者の名前にe_idと参加者各々のp_idをつけて./CEc.phpに飛べるリンクを張る-->
+<!-- 参加者の名前にe_idと参加者各々のp_idをつけて都合の編集画面に飛べるリンクを張る-->
 			<td class = "colparticipant">
-				<a href = "./DEc.php?e_id=<?php echo $e_data[0]["e_id"]; ?>
-					&p_id=<?php echo $p_tsugo[$i]["p_id"]; ?>" >
+				<a href = "./s.php?e_id=<?php echo $e_data[0]["e_id"]; ?>
+					&p_id=<?php echo $p_tsugo[$i]["p_id"]; ?>&proc=3" >
 					<?php echo $p_tsugo[$i]["p_name"]; ?>
 				</a>
 			</td>
@@ -108,7 +104,7 @@
 	</table><br>
 <?php } ?><br>
 
-<input type="button" onclick="location.href='./CDc.php?e_id=<?php echo $_GET['e_id']; ?>'" value="出欠を入力する" >
+<input type="button" onclick="location.href='./s.php?e_id=<?php echo $e_id; ?>&proc=1'" value="出欠を入力する" >
 
 </body>
 </html>

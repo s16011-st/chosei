@@ -1,20 +1,8 @@
 <?php
-	session_start();
-	$e_id = $_GET['e_id'];
-	$e_data = $_SESSION['e_data'];
-	if( $e_id !== $e_data[0]['e_id'] ) {
-		header( 'Location: ./Hv.php' );
-	}
-	$day_time = $_SESSION['day_time'];
-	$p_sum = $_SESSION['p_sum'];
-	$p_tsugo = $_SESSION['p_tsugo'];
-	$p_t_tsugo = $_SESSION['p_t_tsugo'];	//編集する参加者の情報・都合
 	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
-
 //登録者なしのときは値がない（NULL）ので、0を格納する
 	if( !$ninzu ){
 		$ninzu = 0;
-
 //出欠都合を 2 →◯, 1 →△, 0 →✕ に変換
 	} else {
 		for( $i=0; $i<$ninzu*count($day_time); $i++){
@@ -86,9 +74,10 @@
 			</tr>
 			<?php for( $i=0; $i<$ninzu*count($day_time); $i=$i+count($day_time) ) { ?>
 			<tr>
-<!-- 参加者の名前にe_idと参加者各々のp_idをつけて./CEc.phpに飛べるリンクを張る-->
+<!-- 参加者の名前にe_idと参加者各々のp_idをつけて都合の編集画面に飛べるリンクを張る-->
 				<td class = "colparticipant">
-					<a href = "./DEc.php?e_id=<?php echo $e_data[0]["e_id"]; ?>&p_id=<?php echo $p_tsugo[$i]["p_id"]; ?>" >
+					<a href = "./s.php?e_id=<?php echo $e_data[0]["e_id"]; ?>
+						&p_id=<?php echo $p_tsugo[$i]["p_id"]; ?>&proc=3" >
 						<?php echo $p_tsugo[$i]["p_name"]; ?>
 					</a>
 				</td>
@@ -107,7 +96,7 @@
 <div class="float">
 	<h3><?php echo $p_t_tsugo[0]["p_name"]; ?>さんの出欠を編集</h3>
 	<hr>
-	<FORM action="./ECc.php?e_id=<?php echo $e_id; ?>&p_id=<?php echo $_GET['p_id']; ?>&proc=1" method="post">
+	<FORM action="./s.php?e_id=<?php echo $e_id."&p_id=".$p_id; ?>&proc=4" method="post">
 	<h3>表示名</h3>
 	表示に使用する名前を入力してください。<br>
 		<input type="text" name="p_name" value="<?php echo $p_t_tsugo[0]["p_name"]; ?>" required><br><br>
@@ -146,7 +135,7 @@
 </div>
 
 <div class="float">
-	<input type="button" onclick='location.href="./ECc.php?e_id=<?php echo $e_id; ?>&p_id=<?php echo $_GET['p_id']; ?>&proc=2"' value=登録を削除 />
+	<input type="button" onclick='location.href="./s.php?e_id=<?php echo $e_id."&p_id=".$p_id; ?>&proc=5"' value=登録を削除 />
 </div>
 
 </BODY>

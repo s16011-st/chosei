@@ -1,15 +1,10 @@
 <?php
-	session_start();
-	$e_id = $_GET['e_id'];
-	$e_data = $_SESSION['e_data'];
-	if( $e_id !== $e_data[0]['e_id'] ) {
-		header( 'Location: ./Hv.php' );
+//includeで見せるだけで、直接アクセスさせない
+	if( array_shift( get_included_files() ) === __FILE__ ) {
+		die( 'エラー：　正しいURLを指定してください。' );
 	}
-	$day_time = $_SESSION['day_time'];
-	$p_sum = $_SESSION['p_sum'];
-	$p_tsugo = $_SESSION['p_tsugo'];
-	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
 
+	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
 //登録者なしのときは値がない（NULL）ので、0を格納する
 	if( !$ninzu ){
 		$ninzu = 0;
@@ -25,9 +20,7 @@
 				$p_tsugo[$i]["tsugo"] = "✕";
 			}
 		}
-
 	}
-//	var_dump($p_tsugo);
 ?>
 <HTML>
 <HEAD>
@@ -89,10 +82,10 @@
 			</tr>
 			<?php for( $i=0; $i<$ninzu*count($day_time); $i=$i+count($day_time) ) { ?>
 			<tr>
-<!-- 参加者の名前にe_idと参加者各々のp_idをつけて./CEc.phpに飛べるリンクを張る-->
+<!-- 参加者の名前にe_idと参加者各々のp_idをつけて都合の編集画面に飛べるリンクを張る-->
 				<td class = "colparticipant">
-					<a href = "./DEc.php?e_id=<?php echo $e_data[0]["e_id"]; ?>
-						&p_id=<?php echo $p_tsugo[$i]["p_id"]; ?>" >
+					<a href = "./s.php?e_id=<?php echo $e_data[0]["e_id"]; ?>
+						&p_id=<?php echo $p_tsugo[$i]["p_id"]; ?>&proc=3" >
 						<?php echo $p_tsugo[$i]["p_name"]; ?>
 					</a>
 				</td>
@@ -111,7 +104,7 @@
 <div class="float">
 	<h3>出欠を入力する</h3>
 	<hr>
-	<FORM action="./DCc.php?e_id=<?php echo $e_id; ?>" method="post">
+	<FORM action="./s.php?e_id=<?php echo $e_id; ?>&proc=2" method="post">
 	<h3>表示名</h3>
 	表示に使用する名前を入力してください。<br>
 		<input type="text" name="p_name" required><br><br>

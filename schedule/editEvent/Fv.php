@@ -1,13 +1,3 @@
-<?php
-	session_start();
-	$e_id = $_GET['e_id'];
-	$e_data = $_SESSION['e_data'];
-	if( $e_id !== $e_data[0]['e_id'] ) {
-		header( 'Location: ./Hv.php' );
-	}
-	$day_time = $_SESSION['day_time'];
-?>
-
 <html>
 <head>
 	<TITLE>日程調整ページ編集画面</TITLE>
@@ -16,7 +6,7 @@
 <body>
 <h1>イベント編集・削除</h1>
 
-<FORM action="./FCc.php?e_id=<?php echo $e_id; ?>" method="post">
+<FORM action="./editEvent.php?e_id=<?php echo $e_id; ?>" method="post">
 <div class="float">
 	<h3>イベント名</h3>
 	<input type="text" name="new_e_name" value="<?php echo $e_data[0]['e_name']; ?>" required ><br><br>
@@ -52,7 +42,7 @@
 <div class="float">
 	<h3>イベントの削除<h3>
 	<h4 class="delete">イベントを削除する</h4>
-	<input type="button" onclick="location.href='./FGc.php?e_id=<?php echo $e_id; ?>'" value="イベント削除" >
+	<input type="button" onclick="location.href='./delete/delete.php?e_id=<?php echo $e_id; ?>'" value="イベント削除" >
 	<br>※一度削除すると復旧はできません。ご注意ください。
 </FORM>
 </div>
