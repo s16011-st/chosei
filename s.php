@@ -102,7 +102,7 @@
 //日程調整ページの編集画面へ遷移
 				case '6':
 					if( $_COOKIE[$e_id] === $e_data[0]["organizer_id"] ) {
-						header( "Location: ./schedule/editEvent/edit.php?e_id=".$e_id );
+						header( "Location: ./schedule/editEvent/edit.php?e_id=".$e_id."&proc=6" );
 					}
 					break;
 //procが指定されたもの以外ならばエラーページへ
