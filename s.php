@@ -1,3 +1,11 @@
+<html>
+<head>
+        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+        <LINK href="./style.css" rel="stylesheet" type="text/css">
+</head>
+</html>
+
+
 <?php
 	require_once( './model.php' );
 	$e_id = $_GET['e_id'];
