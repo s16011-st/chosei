@@ -2,28 +2,25 @@
 <head>
 	<!-- 旧Av.phpです -->
 	<TITLE>イベント作成</TITLE>
-	<LINK href="./style.css" rel="stylesheet" type="text/css">
+	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <!--jQueryのインストール-->
-        <script src="jQuery_test/datepicker-ja.js"></script>
-        <!--カレンダーの曜日を日本語にする-->
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
-        <!--カレンダーのデザイン設定-->
+
+	<!--jQueryのインストール-->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<!--カレンダーの曜日を日本語にする-->
+	<script src="jQuery_test/datepicker-ja.js"></script>
+	<!--カレンダーのデザイン設定-->
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
+	<!--datepickerの設定-->
+	<script src="./src/datepicker.js"></script>
+
 <h1>イベントを作る</h1>
 <FORM action="./schedule/newEvent/complete.php" method="post">
-
-<!--
-<div class="float">
-	<h3>[step1]&nbsp;日にち候補</h3>
-	<textarea name="dates" required ></textarea><br><br>
-</div>
--->
 <div id="datepicker" class="float">
-        <h3>[step1]&nbsp;日にち候補</h3>
-        <textarea id="date_val" name="dates" required></textarea>
+	<h3>[step1]&nbsp;日にち候補</h3>
+	<textarea id="date_val" name="dates" required></textarea>
 </div>
 <div class="float">
 	<h3>[step2]&nbsp;イベント名</h3>
@@ -34,22 +31,6 @@
 	<textarea name="e_comment"></textarea><br><br>
 	<INPUT type="submit" value="イベントを作る">
 </div>
-<script>
-        $( function() {
-                $( "#datepicker" ).datepicker({
-                        dateFormat:'yy/mm/dd(DD)',//入力される日付>フォーマット
-                        dayNames:['日','月','火','水','木','金','土'],
-                        //曜日フォーマットを漢字に変更
-                        minDate: '0y', //当日より前は選択できない
-                        onSelect:function(){
-                                $("#date_val").val($("#date_val").val()+$(this).val()+'\n');
-                                //”date_val”部分（日付）が選択されたら引数>とし>てメソッドに渡す。再びイベント発生待ちとなり、"this"にイベント要素”data_val”の値
-を渡して改行する 
-                        }
-                });
-        } );
-</script>
-<!--datepickerの設定-->
 </FORM>
 
 </body>

@@ -21,20 +21,19 @@
 			//イベント情報更新
 				updateEvent( $e_id, $new_e_name, $new_e_comment );
 			//候補日程の削除
-				for( $i=0; $i<count($delete_s_id); $i++ ) {
-					deleteDayTime( $delete_s_id[$i] );
-				}
+				deleteDayTime( $delete_s_id );
+
 			//候補日程の追加があれば追加
+//すでに登録している参加者について、追加した日の都合をNULLで登録しないといかん
 				if( !empty($new_day_time) ) {
-					for( $i=0; $i<count($new_day_time); $i++ ) {
-						organizeDayTime( $e_id, $new_day_time[$i] );
-					}
+					$result = addDayTime( $e_id, $new_day_time );
 				}
+//				echo $result;
 				header( "Location: ../../s.php?e_id=$e_id&proc=0" );
 				break;
 			case '8':
 				if( $result = deleteEvent( $e_id ) ) {
-					header( "Location: ./delete/complete.php");
+					header( "Location: ./deletecomplete.php");
 				} else {
 					header( "Location: ./delete/error.php");
 				}

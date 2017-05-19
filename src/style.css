@@ -20,6 +20,10 @@ h1 {
 input,textarea {
 	padding: 5px 10px;
 }
+textarea {
+	width: 300px;
+	height: 150px;
+}
 input[ type = "radio" ] {
 	-webkit-transform: scale(1.2);
 	transform: scale(1.2);

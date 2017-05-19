@@ -9,24 +9,27 @@
 	if( !$ninzu ){
 		$ninzu = 0;
 
-//出欠都合を 2 →◯, 1 →△, 0 →✕ に変換
+//出欠都合を 3 →◯, 2 →△, 1 →✕, 0 →""に変換
 	} else {
 		for( $i=0; $i<$ninzu*count($day_time); $i++){
-			if( (int)$p_tsugo[$i]["tsugo"] === 2 ) {
+			if( (int)$p_tsugo[$i]["tsugo"] === 3 ) {
 				$p_tsugo[$i]["tsugo"] = "◯";
-			} else if( (int)$p_tsugo[$i]["tsugo"] === 1 ) {
+			} else if( (int)$p_tsugo[$i]["tsugo"] === 2 ) {
 				$p_tsugo[$i]["tsugo"] = "△";
-			} else if( (int)$p_tsugo[$i]["tsugo"] === 0 ) {
+			} else if( (int)$p_tsugo[$i]["tsugo"] === 1 ) {
 				$p_tsugo[$i]["tsugo"] = "✕";
+			} else if( $p_tsugo[$i]["tsugo"] == null ) {
+				$p_tsugo[$i]["tsugo"] = "";
 			}
 		}
 	}
+//	var_dump( $p_tsugo );
 ?>
 
 <HTML>
 <HEAD>
 	<TITLE>日程調整ページトップ</TITLE>
-	<LINK href="./style.css" rel="stylesheet" type="text/css">
+	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
 </HEAD>
 <BODY>
 <?php if( $_COOKIE[$e_id] === $e_data[0]["organizer_id"] ) { ?>
