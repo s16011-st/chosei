@@ -268,6 +268,7 @@ function deleteDayTime( $s_id ) {
 }
 
 
+//★★★内部仕様書変更（追加した関数）★★★
 //(F→C)日にち候補の追加
 function addDayTime( $e_id, $new_day_time ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
