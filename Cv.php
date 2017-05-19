@@ -84,7 +84,7 @@
 </table><br>
 
 <!--参加者の都合-->
-<?php if( $ninzu!=0 ){ ?>
+<?php //if( $ninzu!==0 ){ ?>
 	<table>
 		<tr>
 			<th>参加者</th>
@@ -112,7 +112,7 @@
 		</tr>
 		<?php } ?>
 	</table><br>
-<?php } ?><br>
+<?php// } ?><br>
 
 <input type="button" onclick="location.href='./s.php?e_id=<?php echo $e_id; ?>&proc=1'" value="出欠を入力する" >
 
