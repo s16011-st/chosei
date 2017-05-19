@@ -1,7 +1,7 @@
 <html>
 <head>
 	<TITLE>エラー</TITLE>
-	<LINK href="./style.css" rel="stylesheet" type="text/css">
+	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 

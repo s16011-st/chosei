@@ -13,9 +13,7 @@
 		) {
 			$message = "日程調整ページ作成完了！　URLは ⇩";
 			$url = "https://(IPアドレス)/chosei/s.php?e_id=".$e_id;
-			for( $i=0; $i<count($day_time); $i++ ) {
-				organizeDayTime( $e_id, $day_time[$i] );
-			}
+			organizeDayTime( $e_id, $day_time );
 		}
 	} else {
 		$message = 'えらー。イベント名か日付が空白です。';
