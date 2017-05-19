@@ -45,11 +45,13 @@ function organizeDayTime( $e_id, $day_time ){
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
 	$sql = 'INSERT INTO t_schedule( e_id, day_time ) VALUES( ?, ? )';
 	$stmt = $mysqli->prepare( $sql );
-	$stmt->bind_param( 'ss', $e_id, $day_time );
-	if( $stmt->execute() ) {
-		$result = "日程調整ページ作成完了<br>イベントIDは".$e_id."<br>";
-	} else {
-		$result = "ERROR";
+	for( $i=0; $i<count($day_time); $i++ ){
+		$stmt->bind_param( 'ss', $e_id, $day_time[$i] );
+		if( $stmt->execute() ) {
+			$result = "日程調整ページ作成完了";
+		} else {
+			$result = "ERROR";
+		}
 	}
 	return $result;
 	$stmt->close();
@@ -85,9 +87,9 @@ function countParticipant( $e_id ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
 	$sql = '
 	SELECT x.day_time,
-		count( y.tsugo=2 or null ) as "◯",
-		count( y.tsugo=1 or null ) as "△",
-		count( y.tsugo=0 or null ) as "✕"
+		count( y.tsugo=3 or null ) as "◯",
+		count( y.tsugo=2 or null ) as "△",
+		count( y.tsugo=1 or null ) as "✕"
 	FROM t_schedule x LEFT OUTER JOIN t_tsugo y
 	ON x.s_id = y.s_id
 	WHERE x.e_id = ?
@@ -101,7 +103,7 @@ function countParticipant( $e_id ) {
 	$mysqli->close();
 }
 
-//(C→D)そのイベントの参加者の都合を取得
+//(C,D)参加者の都合を取得
 function getParticipantTsugo( $e_id ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
 	$sql = '
@@ -111,7 +113,7 @@ function getParticipantTsugo( $e_id ) {
 	( t_schedule x LEFT OUTER JOIN t_tsugo y USING(s_id))
 	INNER JOIN t_participant z USING(p_id)
 	WHERE x.e_id = ?
-	ORDER BY z.p_id, x.day_time, y.tsugo';
+	ORDER BY z.p_id, x.s_id';
 	$stmt = $mysqli->prepare( $sql );
 	$stmt->bind_param( 's', $e_id );
 	$stmt->execute();
@@ -121,46 +123,38 @@ function getParticipantTsugo( $e_id ) {
 	$mysqli->close();
 }
 
-//(D→C)参加者登録
-function pRegistration( $p_name, $p_comment, $e_id ) {
+//★★★　内部仕様書変更！　★★★
+//(D→C)参加者の情報と都合を登録
+//pRegistration, getLastPid, entryLastPidConvenienceを一つにまとめた
+function enterParticipantTsugo( $p_name, $p_comment, $e_id, $tsugo ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
-	$sql = ' INSERT INTO t_participant( p_name, p_comment, e_id ) VALUES( ?, ?, ? )';
-	$stmt = $mysqli->prepare( $sql );
+	$sql1 = ' INSERT INTO t_participant( p_name, p_comment, e_id ) VALUES( ?, ?, ? )';
+	$sql2 = ' SELECT p_id FROM t_participant ORDER BY p_id DESC LIMIT 1';
+	$sql3 = ' INSERT INTO t_tsugo( s_id, p_id, tsugo ) VALUES( ?, ?, ? )';
+	$stmt = $mysqli->prepare( $sql1 );
 	$stmt->bind_param( 'sss', $p_name, $p_comment, $e_id );
 	if( $stmt->execute() ) {
-		$result = "参加者登録完了";
-	} else {
-		$result = "参加者登録エラー！！！";
-	}	return $result;
-	$stmt->close();
-	$mysqli->close();
-}
-//(D→C)今登録した参加者のp_id取得
-function getLastPid() {
-	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
-	$sql = 'SELECT p_id FROM t_participant ORDER BY p_id DESC LIMIT 1';
-	$stmt = $mysqli->prepare( $sql );
-//	$stmt->bind_param();
-	$stmt->execute();
-	$result = fetch_all( $stmt );
+		$stmt = $mysqli->prepare( $sql2 );
+		if( $stmt->execute() ) {
+//★★★　ここ下3行、メソッドチェーン的にまとまらんかな。
+			$stmt->store_result();
+			$stmt->bind_result( $p_id );
+			$stmt->fetch();
+			$stmt = $mysqli->prepare( $sql3 );
+			for( $i=0; $i<count($tsugo); $i++ ){
+				$stmt->bind_param( 'iii', $tsugo[$i]['s_id'], $p_id, $tsugo[$i]['tsugo'] );
+				$stmt->execute();
+			}
+			$result = "登録OK!";
+		} else {
+			$result = "登録NG";
+		}
+	}
 	return $result;
 	$stmt->close();
 	$mysqli->close();
 }
-//(D→C)いま登録した参加者の都合を登録
-function entryLastPidConvenience( $s_id, $p_id, $tsugo ) {
-	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
-	$sql = ' INSERT INTO t_tsugo( s_id, p_id, tsugo ) VALUES( ?, ?, ? )';
-	$stmt = $mysqli->prepare( $sql );
-	$stmt->bind_param( 'ssi', $s_id, $p_id, $tsugo );
-	if( $stmt->execute() ) {
-		$result = "都合登録完了";
-	} else {
-		$result = "都合登録エラー！！！";
-	}	return $result;
-	$stmt->close();
-	$mysqli->close();
-}
+
 
 //(D→E)その参加者の都合を取得
 function getTheParticipantTsugo( $e_id, $p_id ) {
@@ -238,7 +232,7 @@ function updateEvent( $e_id, $new_e_name, $new_e_comment ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
 	$sql = 'UPDATE t_event SET e_name = ?, e_comment = ? WHERE e_id = ?';
 	$stmt = $mysqli->prepare( $sql );
-	$stmt->bind_param( 'ssi', $new_e_name, $new_e_comment, $e_id );
+	$stmt->bind_param( 'sss', $new_e_name, $new_e_comment, $e_id );
 	if( $stmt->execute() ) {
 		$result = "更新完了";
 	} else {
@@ -254,16 +248,58 @@ function deleteDayTime( $s_id ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
 	$sql1 = 'DELETE FROM t_tsugo WHERE s_id = ?';
 	$sql2 = 'DELETE FROM t_schedule WHERE s_id = ? ';
+
 	$stmt = $mysqli->prepare( $sql1 );
-	$stmt->bind_param( 'i', $s_id );
-	if( $stmt->execute() ) {
-		$stmt = $mysqli->prepare( $sql2 );
-		$stmt->bind_param( 'i', $s_id );
+	for( $i=0; $i<count($s_id); $i++ ){
+		$stmt->bind_param( 'i', $s_id[$i] );
 		if( $stmt->execute() ) {
-			$result = "削除完了";
-		} else {
-			$result = "削除エラー！！！";
+			$stmt = $mysqli->prepare( $sql2 );
+			$stmt->bind_param( 'i', $s_id[$i] );
+			if( $stmt->execute() ) {
+				$result = "削除完了";
+			} else {
+				$result = "削除エラー！！！";
+			}
 		}
+	}
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+
+//(F→C)日にち候補の追加
+function addDayTime( $e_id, $new_day_time ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql1 = ' INSERT INTO t_schedule( e_id, day_time ) VALUES( ?, ? ) ';
+	$sql2 = ' SELECT s_id FROM t_schedule WHERE e_id = ? ORDER BY s_id DESC LIMIT ? ';
+	$sql3 = ' SELECT p_id FROM t_participant WHERE e_id = ? ';
+	$sql4 = ' INSERT INTO t_tsugo( s_id, p_id, tsugo ) VALUES( ?, ?, "" )';
+
+	$stmt = $mysqli->prepare( $sql1 );
+	for( $i=0; $i<count($new_day_time); $i++ ){
+		$stmt->bind_param( 'ss', $e_id, $new_day_time[$i] );
+		$stmt->execute();
+	}
+	$stmt = $mysqli->prepare( $sql2 );
+	$stmt->bind_param( 'si', $e_id, count($new_day_time) );
+	if( $stmt->execute() ) {
+		$s_id = fetch_all( $stmt );
+		$stmt = $mysqli->prepare( $sql3 );
+		$stmt->bind_param( 's', $e_id );
+		if( $stmt->execute() ) {
+			$p_id = fetch_all( $stmt );
+			for( $i=0; $i<count($s_id); $i++ ){
+				for( $j=0; $j<count($p_id); $j++ ){
+					$stmt = $mysqli->prepare( $sql4 );
+					$stmt->bind_param( 'ii', $s_id[$j]['s_id'], $p_id[$i]['p_id'] );
+					$stmt->execute();
+				}
+			}
+		}
+		$result = "都合登録完了";
+	} else {
+		$result = "都合登録エラー！！！";
 	}
 	return $result;
 	$stmt->close();

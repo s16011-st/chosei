@@ -1,7 +1,8 @@
 <html>
 <head>
+        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
 	<TITLE>エラー</TITLE>
-	<LINK href="./style.css" rel="stylesheet" type="text/css">
+	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 

@@ -1,3 +1,12 @@
+<html>
+<head>
+        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+        <LINK href="./style.css" rel="stylesheet" type="text/css">
+</head>
+</html>
+
+
+
 <?php
 	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
 //登録者なしのときは値がない（NULL）ので、0を格納する
@@ -6,12 +15,14 @@
 //出欠都合を 2 →◯, 1 →△, 0 →✕ に変換
 	} else {
 		for( $i=0; $i<$ninzu*count($day_time); $i++){
-			if( (int)$p_tsugo[$i]["tsugo"] === 2 ) {
+			if( (int)$p_tsugo[$i]["tsugo"] === 3 ) {
 				$p_tsugo[$i]["tsugo"] = "◯";
-			} else if( (int)$p_tsugo[$i]["tsugo"] === 1 ) {
+			} else if( (int)$p_tsugo[$i]["tsugo"] === 2 ) {
 				$p_tsugo[$i]["tsugo"] = "△";
-			} else if( (int)$p_tsugo[$i]["tsugo"] === 0 ) {
+			} else if( (int)$p_tsugo[$i]["tsugo"] === 1 ) {
 				$p_tsugo[$i]["tsugo"] = "✕";
+			} else if( $p_tsugo[$i]["tsugo"] == null ) {
+				$p_tsugo[$i]["tsugo"] = "";
 			}
 		}
 	}
@@ -19,7 +30,7 @@
 <HTML>
 <HEAD>
 	<TITLE>出欠都合更新</TITLE>
-	<LINK href="./style.css" rel="stylesheet" type="text/css">
+	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
 </HEAD>
 <BODY>
 	回答者数：<?php echo $ninzu; ?>人
@@ -112,19 +123,19 @@
 		<tr>
 			<td class="coltsugo">◯</td>
 			<?php for( $i=0; $i<count($day_time); $i++ ){ ?>
-				<td><input type="radio" name="<?php echo $day_time[$i]['s_id']; ?>" value=2 ></td>
+				<td><input type="radio" name="<?php echo $day_time[$i]['s_id']; ?>" value=3 ></td>
 			<?php } ?>
 		</tr>
 		<tr>
 			<td class="coltsugo">△</td>
 			<?php for( $i=0; $i<count($day_time); $i++ ){ ?>
-				<td><input type="radio" name="<?php echo $day_time[$i]['s_id']; ?>" value=1 ></td>
+				<td><input type="radio" name="<?php echo $day_time[$i]['s_id']; ?>" value=2 ></td>
 			<?php } ?>
 		</tr>
 		<tr>
 			<td class="coltsugo">✕</td>
 			<?php for( $i=0; $i<count($day_time); $i++ ){ ?>
-				<td><input type="radio" name="<?php echo $day_time[$i]['s_id']; ?>" checked value=0 ></td>
+				<td><input type="radio" name="<?php echo $day_time[$i]['s_id']; ?>" checked value=1 ></td>
 			<?php } ?>
 		</tr>
 	</table><br>
