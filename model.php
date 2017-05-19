@@ -93,7 +93,7 @@ function countParticipant( $e_id ) {
 	FROM t_schedule x LEFT OUTER JOIN t_tsugo y
 	ON x.s_id = y.s_id
 	WHERE x.e_id = ?
-	GROUP BY x.day_time';
+	GROUP BY x.s_id';
 	$stmt = $mysqli->prepare( $sql );
 	$stmt->bind_param( 's', $e_id );
 	$stmt->execute();
