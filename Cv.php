@@ -1,3 +1,10 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
+	<LINK href="./style.css" rel="stylesheet" type="text/css">
+</head>
+</html>
+
 <?php
 //includeで見せるだけで、直接アクセスさせない
 	if( array_shift( get_included_files() ) === __FILE__ ) {

@@ -1,3 +1,12 @@
+<html>
+<head>
+        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+        <LINK href="./style.css" rel="stylesheet" type="text/css">
+</head>
+</html>
+
+
+
 <?php
 	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
 //登録者なしのときは値がない（NULL）ので、0を格納する
