@@ -8,7 +8,7 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!--カレンダーの曜日を日本語にする-->
-	<script src="jQuery_test/datepicker-ja.js"></script>
+	<script src="../../src/datepicker-ja.js"></script>
 	<!--カレンダーのデザイン設定-->
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
 
