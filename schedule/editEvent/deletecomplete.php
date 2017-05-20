@@ -1,8 +1,9 @@
 <!--旧Gv.phpです-->
 <html>
 <head>
+        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+        <LINK href="../../src/style.css" rel="stylesheet" type="text/css" />
 	<TITLE>イベント削除完了</TITLE>
-	<LINK href="./style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 

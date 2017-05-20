@@ -8,6 +8,7 @@ if( array_shift( get_included_files() ) === __FILE__ ) {
 <html>
 <head>
 	<TITLE>イベント作成完了</TITLE>
+	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
 	<LINK href="../../src/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>

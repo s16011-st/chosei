@@ -1,3 +1,13 @@
+<html>
+<head>
+        <!-- 旧Av.phpです -->
+        <TITLE>イベント作成</TITLE>
+        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+        <LINK href="../../src/style.css" rel="stylesheet" type="text/css" />
+</head>
+</html>
+
+
 <?php
 //旧ABc.phpです
 	require_once( '../../model.php' );
