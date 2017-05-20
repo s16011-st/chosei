@@ -11,7 +11,7 @@
 
 	<script src="../../src/datepicker-ja.js"></script>
 	<!--カレンダーのデザイン設定-->
-	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
 
 <h1>イベント編集・削除</h1>
 
