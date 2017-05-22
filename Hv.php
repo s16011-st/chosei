@@ -1,6 +1,6 @@
 <html>
 <head>
-        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+  <meta name="viewport" content="width=device-width,maximum-scale=1"/>
 	<TITLE>エラー</TITLE>
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
 </head>
