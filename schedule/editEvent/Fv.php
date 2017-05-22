@@ -1,4 +1,5 @@
 <?php
+//変数を取得するファイルの読み込み
 $e_id = $_GET['e_id'];
 require_once( dirname(__FILE__)."/../../model/getValues.php" );
 ?>

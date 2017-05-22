@@ -6,11 +6,21 @@ require_once( dirname(__FILE__)."/model/getValues.php" );
 
 <HTML>
 <HEAD>
-	<TITLE>日程調整ページトップ</TITLE>
-	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
-	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
-</HEAD>
+	<TITLE>日程調整ページトップ</TITLE>	
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<!-- Internet Explorer 8 以前のバージョンのための対策 -->
+
+		<!-- 旧Av.phpです -->
+		<TITLE>イベント作成</TITLE>
+		<!--LINK href="./src/style.css" rel="stylesheet" type="text/css"-->
+	</head>
+
 <BODY>
+	<div class="container">
 <?php if( $_COOKIE[$e_id] === $e_data[0]["organizer_id"] ) { ?>
 	あなたが幹事のイベントです。
 	<input type="button" onclick='location.href="./s.php?e_id=<?php echo $e_id; ?>&proc=6"' value="イベント編集" >
@@ -21,7 +31,7 @@ require_once( dirname(__FILE__)."/model/getValues.php" );
 <h3>イベントの詳細説明</h3>
 	<?php echo $e_data[0]["e_comment"]; ?><br><br>
 <h3>日にち候補</h3>
-<table>
+<table class="table">
 	<tr>
 		<th>都合</th>
 		<?php
@@ -57,7 +67,7 @@ require_once( dirname(__FILE__)."/model/getValues.php" );
 
 <!--参加者の都合-->
 <?php //if( $ninzu!==0 ){ ?>
-	<table>
+	<table class="table">
 		<tr>
 			<th>参加者</th>
 			<?php
@@ -87,6 +97,6 @@ require_once( dirname(__FILE__)."/model/getValues.php" );
 <?php// } ?><br>
 
 <input type="button" onclick="location.href='./s.php?e_id=<?php echo $e_id; ?>&proc=1'" value="出欠を入力する" >
-
+</div>
 </body>
 </html>

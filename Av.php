@@ -11,8 +11,7 @@
 
 	<!-- 旧Av.phpです -->
 	<TITLE>イベント作成</TITLE>
-	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
-	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
+	<!--LINK href="./src/style.css" rel="stylesheet" type="text/css"-->
 </head>
 
 <body>
@@ -27,21 +26,24 @@
 	<script src="./src/datepicker-ja.js"></script>
 
 <h1>イベントを作る</h1>
+<div class="container-fluid">
+	::before
 <FORM action="./schedule/newEvent/create.php" method="post">
-<div id="datepicker" class="float">
+<div id="datepicker" class="col-md-4">
 	<h3>[step1]&nbsp;日にち候補</h3>
 	<textarea id="date_val" name="dates" required></textarea>
 </div>
-<div class="float">
+<div class="col-md-4">
 	<h3>[step2]&nbsp;イベント名</h3>
 	<input type="text" name="e_name" required ><br><br>
 </div>
-<div class="float">
+<div class="col-md-4">
 	<h3>[step3]&nbsp;メモ</h3>
 	<textarea name="e_comment"></textarea><br><br>
 	<INPUT type="submit" value="イベントを作る">
 </div>
 </FORM>
-
+	::after
+</div>
 </body>
 </html>

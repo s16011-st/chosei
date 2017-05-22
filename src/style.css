@@ -1,10 +1,6 @@
-//smartphone ver
-//PC ver
-
 body {
 	margin-top: 30px;
 	margin-left: 30px;
-	background-color:#00ffff;
 }
 p {
 	line-height: 175%;
@@ -24,7 +20,7 @@ input,textarea {
 	padding: 5px 10px;
 }
 textarea {
-	width: 300px;
+	width: 260px;
 	height: 150px;
 }
 input[ type = "radio" ] {
@@ -74,4 +70,3 @@ th {
 	float: left;
 	margin-right: 50px;
 }
-
