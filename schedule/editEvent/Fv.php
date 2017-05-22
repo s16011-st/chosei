@@ -1,3 +1,8 @@
+<?php
+$e_id = $_GET['e_id'];
+require_once( dirname(__FILE__)."/../../model/getValues.php" );
+?>
+
 <html>
 <head>
 	<TITLE>日程調整ページ編集画面</TITLE>
@@ -55,7 +60,5 @@
 <br>※一度削除すると復旧はできません。ご注意ください。
 </FORM>
 </div>
-<!--datepickerの設定-->
-<script src="../../src/datepicker.js"></script>
 </body>
 </html>
