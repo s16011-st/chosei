@@ -45,6 +45,7 @@
 		<INPUT type="submit" value="イベントを作る">
 	</div>
 	</FORM>
+
 </div>
 </body>
 </html>
