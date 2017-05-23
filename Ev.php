@@ -1,17 +1,36 @@
-<?php
-//変数を取得するファイルの読み込み
-$e_id = $_GET['e_id'];
-require_once( dirname(__FILE__)."/model/getValues.php" );
-session_start();
-$p_t_tsugo = $_SESSION['p_t_tsugo'];
-$p_id = $_GET['p_id'];
-?>
+<html>
+<head>
+        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+        <LINK href="./src/style.css" rel="stylesheet" type="text/css">
+</head>
+</html>
 
+
+
+<?php
+	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
+//登録者なしのときは値がない（NULL）ので、0を格納する
+	if( !$ninzu ){
+		$ninzu = 0;
+//出欠都合を 2 →◯, 1 →△, 0 →✕ に変換
+	} else {
+		for( $i=0; $i<$ninzu*count($day_time); $i++){
+			if( (int)$p_tsugo[$i]["tsugo"] === 3 ) {
+				$p_tsugo[$i]["tsugo"] = "◯";
+			} else if( (int)$p_tsugo[$i]["tsugo"] === 2 ) {
+				$p_tsugo[$i]["tsugo"] = "△";
+			} else if( (int)$p_tsugo[$i]["tsugo"] === 1 ) {
+				$p_tsugo[$i]["tsugo"] = "✕";
+			} else if( $p_tsugo[$i]["tsugo"] == null ) {
+				$p_tsugo[$i]["tsugo"] = "";
+			}
+		}
+	}
+?>
 <HTML>
 <HEAD>
-	<TITLE>出欠都合新規入力</TITLE>
+	<TITLE>出欠都合更新</TITLE>
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
-	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
 </HEAD>
 <BODY>
 	回答者数：<?php echo $ninzu; ?>人

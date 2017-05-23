@@ -1,5 +1,13 @@
+<html>
+<head>
+        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+        <LINK href="./src/style.css" rel="stylesheet" type="text/css">
+</head>
+</html>
+
+
 <?php
-	require_once( dirname(__FILE__)."/model/model.php" );
+	require_once( './model.php' );
 	$e_id = $_GET['e_id'];
 	$proc = $_GET['proc'];
 
@@ -17,11 +25,12 @@
 //日程調整ページトップ画面表示
 			switch ( $proc ) {
 				case '0':
-					header( "Location: ./Cv.php?e_id=$e_id" );
+//					include( "./Cv.php" );
+					goto Cv;
 					break;
 //都合入力画面表示
 				case '1':
-					header( "Location: ./Dv.php?e_id=$e_id" );
+					include( "./Dv.php" );
 					break;
 //登録してトップ画面へ戻る
 				case '2':
@@ -33,15 +42,14 @@
 						);
 					}
 					enterParticipantTsugo( $_POST['p_name'], $_POST['p_comment'], $e_id, $tsugo );
-					header( "Location: ./Cv.php?e_id=$e_id" );
+					goto Cv;
 					break;
 //選択した参加者の都合を取得して編集画面へ
 				case '3':
 					$p_id = $_GET['p_id'];
 					//その参加者の登録情報・都合を取得
-					session_start();
-					if( $_SESSION['p_t_tsugo'] = getTheParticipantTsugo( $e_id, $p_id ) ) {
-						header( "Location: ./Ev.php?e_id=$e_id&p_id=$p_id" );
+					if( $p_t_tsugo = getTheParticipantTsugo( $e_id, $p_id ) ) {
+						include( "./Ev.php" );
 					//p_idをいじって都合取得できなかったらエラーページに飛ばす
 					} else {
 						header( "Location: ./Hv.php" );
@@ -65,13 +73,13 @@
 							$tsugo[$i]['s_id'], $tsugo[$i]['p_id'], $tsugo[$i]['tsugo']
 						);
 					}
-					header( "Location: ./Cv.php?e_id=$e_id" );
+					goto Cv;
 					break;
 //その参加者の都合を削除
 				case '5':
 					$p_id = $_GET['p_id'];
 					deleteParticipantTsugo( $p_id );
-					header( "Location: ./Cv.php?e_id=$e_id&p_id=$p_id" );
+					goto Cv;
 					break;
 //日程調整ページの編集画面へ遷移
 				case '6':
@@ -90,6 +98,15 @@
 		}
 		break;
 	}
-
 exit();
+
+Cv:
+//更新情報を取得
+	$e_data = getEventData( $e_id );
+	$day_time = getEventDaytime( $e_id );
+	$p_sum = countParticipant( $e_id );
+	$p_tsugo = getParticipantTsugo( $e_id );
+//トップページに戻る
+	include( "./Cv.php" );
+	exit();
 ?>

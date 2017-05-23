@@ -1,13 +1,42 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
+	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
+</head>
+</html>
+
+<div class=center>
 <?php
-//変数を取得するファイルの読み込み
-$e_id = $_GET['e_id'];
-require_once( dirname(__FILE__)."/model/getValues.php" );
+//includeで見せるだけで、直接アクセスさせない
+	if( array_shift( get_included_files() ) === __FILE__ ) {
+		die( 'エラー：　正しいURLを指定してください。' );
+	}
+
+	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
+//登録者なしのときは値がない（NULL）ので、0を格納する
+	if( !$ninzu ){
+		$ninzu = 0;
+
+//出欠都合を 3 →◯, 2 →△, 1 →✕, 0 →""に変換
+	} else {
+		for( $i=0; $i<$ninzu*count($day_time); $i++){
+			if( (int)$p_tsugo[$i]["tsugo"] === 3 ) {
+				$p_tsugo[$i]["tsugo"] = "◯";
+			} else if( (int)$p_tsugo[$i]["tsugo"] === 2 ) {
+				$p_tsugo[$i]["tsugo"] = "△";
+			} else if( (int)$p_tsugo[$i]["tsugo"] === 1 ) {
+				$p_tsugo[$i]["tsugo"] = "✕";
+			} else if( $p_tsugo[$i]["tsugo"] == null ) {
+				$p_tsugo[$i]["tsugo"] = "";
+			}
+		}
+	}
+//	var_dump( $p_tsugo );
 ?>
 
 <HTML>
 <HEAD>
 	<TITLE>日程調整ページトップ</TITLE>
-	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
 </HEAD>
 <BODY>
@@ -90,3 +119,4 @@ require_once( dirname(__FILE__)."/model/getValues.php" );
 
 </body>
 </html>
+</div>
