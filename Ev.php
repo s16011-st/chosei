@@ -1,7 +1,7 @@
 <?php
 //変数を取得するファイルの読み込み
 $e_id = $_GET['e_id'];
-require_once( dirname(__FILE__)."/model/getValues.php" );
+include( dirname(__FILE__)."/model/getValues.php" );
 session_start();
 $p_t_tsugo = $_SESSION['p_t_tsugo'];
 $p_id = $_GET['p_id'];
@@ -15,75 +15,22 @@ $p_id = $_GET['p_id'];
 	<TITLE>出欠都合新規入力</TITLE>
 </HEAD>
 <BODY>
-	回答者数：<?php echo $ninzu; ?>人
-	<h1><?php echo $e_data[0]["e_name"]; ?></h1>
+<br><br>
+
+回答者数：<?php echo $ninzu; ?>人
+<!--イベント名-->
+<h1><?php echo $e_data[0]["e_name"]; ?></h1>
 
 <div class="float">
-	<h3>イベントの詳細説明</h3>
-		<?php echo $e_data[0]["e_comment"]; ?><br><br>
-	<h3>日にち候補</h3>
-	<table>
-		<tr>
-			<th>都合</th>
-			<?php
-			for( $i=0; $i<count($day_time); $i++ ){
-				echo "<th>".$day_time[$i]["day_time"]."</th>";
-			} ?>
-		</tr>
-		<tr>
-			<td class="coltsugo">◯</td>
-			<?php
-			for( $i=0; $i<count($day_time); $i++ ){
-				echo "<td>".$p_sum[$i]["◯"]."人</td>";
-			}
-			?>
-		</tr>
-		<tr>
-			<td class="coltsugo">△</td>
-			<?php
-			for( $i=0; $i<count($day_time); $i++ ){
-				echo "<td>".$p_sum[$i]["△"]."人</td>";
-			}
-			?>
-		</tr>
-		<tr>
-			<td class="coltsugo">✕</td>
-			<?php
-			for( $i=0; $i<count($day_time); $i++ ){
-				echo "<td>".$p_sum[$i]["✕"]."人</td>";
-			}
-			?>
-		</tr>
-	</table><br>
-	<?php if( $ninzu!=0 ){ ?>
-		<table>
-			<tr>
-				<th>参加者</th>
-				<?php
-				for( $i=0; $i<count($day_time); $i++ ){
-					echo "<th>".$day_time[$i]["day_time"]."</th>";
-				} ?>
-				<th>コメント</th>
-			</tr>
-			<?php for( $i=0; $i<$ninzu*count($day_time); $i=$i+count($day_time) ) { ?>
-			<tr>
-<!-- 参加者の名前にe_idと参加者各々のp_idをつけて都合の編集画面に飛べるリンクを張る-->
-				<td class = "colparticipant">
-					<a href = "./s.php?e_id=<?php echo $e_data[0]["e_id"]; ?>
-						&p_id=<?php echo $p_tsugo[$i]["p_id"]; ?>&proc=3" >
-						<?php echo $p_tsugo[$i]["p_name"]; ?>
-					</a>
-				</td>
-				<?php for( $j=$i; $j<$i+count($day_time); $j++){
-					echo "<td>".$p_tsugo[$j]["tsugo"]."</td>";
-				} ?>
-				<td class="p_comment">
-					<?php echo $p_tsugo[$i]["p_comment"]; ?>
-				</td>
-			</tr>
-			<?php } ?>
-		</table><br>
-	<?php } ?><br>
+<h3>イベントの詳細説明</h3>
+	<?php echo $e_data[0]["e_comment"]; ?><br><br>
+
+<!--参加者の都合に関する2つの表をインクルード-->
+<h3>日にち候補</h3>
+<?php include( dirname(__FILE__)."/Table_sum.php" ); ?><br>
+<?php if( $ninzu!==0 ){ ?>
+	<?php include( dirname(__FILE__)."/Table_p.php" ); ?><br>
+<?php } ?><br>
 </div>
 
 <div class="float">
