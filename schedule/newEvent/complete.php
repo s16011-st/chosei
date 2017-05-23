@@ -2,7 +2,7 @@
 //旧Bvです
 //変数を取得するファイルの読み込み
 $e_id = $_GET['e_id'];
-require_once( dirname(__FILE__)."/../../model/getValues.php" );
+include( dirname(__FILE__)."/../../model/getValues.php" );
 ?>
 
 <!doctype HTML>
@@ -21,7 +21,7 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 <input type="button" onclick='location.href="../../Cv.php?e_id=<?php echo $e_id; ?>"' value=イベントページを表示 />
 <br><br><br><br>
 
-<a href = "./Av.php">日程調整ページ作成画面に戻る</a>
+<a href = "../../index.php">日程調整ページ作成画面に戻る</a>
 
 </body>
 </html>

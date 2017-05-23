@@ -15,16 +15,14 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 	<!--jQueryのインストール-->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<!--カレンダーの曜日を日本語にする-->
-	<script src="../../src/datepicker.js"></script>
-	<script src="../../src/datepicker-ja.js"></script>
 	<!--カレンダーのデザイン設定-->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
+	<!--datepickerの設定-->
+	<script src="../../src/datepicker.js"></script>
+	<script src="../../src/datepicker-ja.js"></script>
 
 <h1>イベント編集・削除</h1>
-
 <FORM action="./edit.php?e_id=<?php echo $e_id; ?>&proc=7" method="post">
-
 <div class="float">
 <h3>イベント名</h3>
 <input type="text" name="new_e_name" value="<?php echo $e_data[0]['e_name']; ?>" required ><br><br>
@@ -44,7 +42,6 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 <?php } ?>
 </div>
 
-
 <h4>追加する候補</h4>
 追加したい候補を入力してください。<br>
 <div id="datepicker" class="float">
@@ -54,7 +51,6 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 <input type="button" onclick="location.href='../../s.php?e_id=<?php echo $e_id; ?>&proc=2'" value="戻る" >
 <input type="submit" value="編集内容を保存" ><br><br><br>
 </div>
-
 
 <div class="float">
 <h3>イベントの削除<h3>
