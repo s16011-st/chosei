@@ -17,6 +17,7 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!--カレンダーの曜日を日本語にする-->
 	<script src="../../src/datepicker.js"></script>
+	<script src="../../src/datepicker-ja.js"></script>
 	<!--カレンダーのデザイン設定-->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
 
