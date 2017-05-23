@@ -1,9 +1,3 @@
-<?php
-//変数を取得するファイルの読み込み
-$e_id = $_GET['e_id'];
-require_once( dirname(__FILE__)."/../../model/getValues.php" );
-?>
-
 <html>
 <head>
 	<TITLE>日程調整ページ編集画面</TITLE>
@@ -20,7 +14,7 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
 
 <h1>イベント編集・削除</h1>
-
+<div class="main">
 <FORM action="./edit.php?e_id=<?php echo $e_id; ?>&proc=7" method="post">
 
 <div class="float">
@@ -52,8 +46,9 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 <input type="button" onclick="location.href='../../s.php?e_id=<?php echo $e_id; ?>&proc=2'" value="戻る" >
 <input type="submit" value="編集内容を保存" ><br><br><br>
 </div>
+</div>
 
-
+<div class="main">
 <div class="float">
 <h3>イベントの削除<h3>
 <h4 class="delete">イベントを削除する</h4>
@@ -61,5 +56,8 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 <br>※一度削除すると復旧はできません。ご注意ください。
 </FORM>
 </div>
+</div>
+<!--datepickerの設定-->
+<script src="../../src/datepicker.js"></script>
 </body>
 </html>

@@ -1,19 +1,46 @@
+<html>
+<head>
+        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
+        <LINK href="./src/style.css" rel="stylesheet" type="text/css">
+</head>
+</html>
+
+
 <?php
-//変数を取得するファイルの読み込み
-$e_id = $_GET['e_id'];
-require_once( dirname(__FILE__)."/model/getValues.php" );
+//includeで見せるだけで、直接アクセスさせない
+	if( array_shift( get_included_files() ) === __FILE__ ) {
+		die( 'エラー：　正しいURLを指定してください。' );
+	}
+
+	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
+//登録者なしのときは値がない（NULL）ので、0を格納する
+	if( !$ninzu ){
+		$ninzu = 0;
+
+//出欠都合を 2 →◯, 1 →△, 0 →✕ に変換
+	} else {
+		for( $i=0; $i<$ninzu*count($day_time); $i++){
+			if( (int)$p_tsugo[$i]["tsugo"] === 3 ) {
+				$p_tsugo[$i]["tsugo"] = "◯";
+			} else if( (int)$p_tsugo[$i]["tsugo"] === 2 ) {
+				$p_tsugo[$i]["tsugo"] = "△";
+			} else if( (int)$p_tsugo[$i]["tsugo"] === 1 ) {
+				$p_tsugo[$i]["tsugo"] = "✕";
+			} else if( $p_tsugo[$i]["tsugo"] == null ) {
+				$p_tsugo[$i]["tsugo"] = "";
+			}
+		}
+	}
 ?>
 <HTML>
 <HEAD>
 	<TITLE>出欠都合新規入力</TITLE>
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
-	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
 </HEAD>
 <BODY>
 
 	<br><br>回答者数：<?php echo $ninzu; ?>人
 	<h1><?php echo $e_data[0]["e_name"]; ?></h1>
-
 <div class="float">
 	<h3>イベントの詳細説明</h3>
 		<?php echo $e_data[0]["e_comment"]; ?><br><br>
@@ -119,7 +146,8 @@ require_once( dirname(__FILE__)."/model/getValues.php" );
 		</tr>
 	</table><br>
 </div>
-
+<!--</div>-->
+<!--<div class="main">-->
 <div class="float">
 	<h3>コメント</h3>
 		<textarea name="p_comment" ></textarea><br><br>
@@ -127,6 +155,5 @@ require_once( dirname(__FILE__)."/model/getValues.php" );
 	</FORM>
 
 </div>
-
 </BODY>
 </HTML>
