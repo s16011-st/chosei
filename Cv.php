@@ -4,7 +4,8 @@ $e_id = $_GET['e_id'];
 require_once( dirname(__FILE__)."/model/getValues.php" );
 ?>
 
-<HTML>
+<!doctype HTML>
+<HTML lang="ja">
 <HEAD>
 	<TITLE>日程調整ページトップ</TITLE>
 	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
@@ -56,7 +57,7 @@ require_once( dirname(__FILE__)."/model/getValues.php" );
 </table><br>
 
 <!--参加者の都合-->
-<?php //if( $ninzu!==0 ){ ?>
+<?php if( $ninzu!==0 ){ ?>
 	<table>
 		<tr>
 			<th>参加者</th>
@@ -84,7 +85,7 @@ require_once( dirname(__FILE__)."/model/getValues.php" );
 		</tr>
 		<?php } ?>
 	</table><br>
-<?php// } ?><br>
+<?php } ?><br>
 
 <input type="button" onclick="location.href='./s.php?e_id=<?php echo $e_id; ?>&proc=1'" value="出欠を入力する" >
 

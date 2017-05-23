@@ -5,7 +5,8 @@ $e_id = $_GET['e_id'];
 require_once( dirname(__FILE__)."/../../model/getValues.php" );
 ?>
 
-<html>
+<!doctype HTML>
+<HTML lang="ja">
 <head>
 	<TITLE>イベント作成完了</TITLE>
 	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
