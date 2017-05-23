@@ -1,6 +1,7 @@
 <html>
 <head>
 	<TITLE>日程調整ページ編集画面</TITLE>
+	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
 	<LINK href="../../src/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -8,13 +9,12 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!--カレンダーの曜日を日本語にする-->
-
-	<script src="../../src/datepicker-ja.js"></script>
+	<script src="../../src/datepicker.js"></script>
 	<!--カレンダーのデザイン設定-->
 	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
 
 <h1>イベント編集・削除</h1>
-
+<div class="main">
 <FORM action="./edit.php?e_id=<?php echo $e_id; ?>&proc=7" method="post">
 
 <div class="float">
@@ -46,14 +46,16 @@
 <input type="button" onclick="location.href='../../s.php?e_id=<?php echo $e_id; ?>&proc=2'" value="戻る" >
 <input type="submit" value="編集内容を保存" ><br><br><br>
 </div>
+</div>
 
-
+<div class="main">
 <div class="float">
 <h3>イベントの削除<h3>
 <h4 class="delete">イベントを削除する</h4>
 <input type="button" onclick="location.href='./edit.php?e_id=<?php echo $e_id; ?>&proc=8'" value="イベント削除" >
 <br>※一度削除すると復旧はできません。ご注意ください。
 </FORM>
+</div>
 </div>
 <!--datepickerの設定-->
 <script src="../../src/datepicker.js"></script>

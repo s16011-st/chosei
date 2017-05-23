@@ -5,6 +5,7 @@
 </head>
 </html>
 
+<div class=center>
 <?php
 //includeで見せるだけで、直接アクセスさせない
 	if( array_shift( get_included_files() ) === __FILE__ ) {
@@ -118,3 +119,4 @@
 
 </body>
 </html>
+</div>

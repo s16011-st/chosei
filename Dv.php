@@ -6,7 +6,6 @@
 </html>
 
 
-
 <?php
 //includeで見せるだけで、直接アクセスさせない
 	if( array_shift( get_included_files() ) === __FILE__ ) {
@@ -42,7 +41,6 @@
 
 	<br><br>回答者数：<?php echo $ninzu; ?>人
 	<h1><?php echo $e_data[0]["e_name"]; ?></h1>
-
 <div class="float">
 	<h3>イベントの詳細説明</h3>
 		<?php echo $e_data[0]["e_comment"]; ?><br><br>
@@ -148,7 +146,8 @@
 		</tr>
 	</table><br>
 </div>
-
+<!--</div>-->
+<!--<div class="main">-->
 <div class="float">
 	<h3>コメント</h3>
 		<textarea name="p_comment" ></textarea><br><br>
@@ -156,6 +155,5 @@
 	</FORM>
 
 </div>
-
 </BODY>
 </HTML>

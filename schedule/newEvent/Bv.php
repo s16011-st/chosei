@@ -14,7 +14,7 @@ if( array_shift( get_included_files() ) === __FILE__ ) {
 <body>
 
 <h1>日程調整ページ作成結果</h1>
-
+<div class=center><!--センタリング--> 
 <?php
 	echo $message."<br><br>";
 	echo $url."<br>";
@@ -26,6 +26,6 @@ if( array_shift( get_included_files() ) === __FILE__ ) {
 <br><br><br><br>
 
 <a href = "./Av.php">日程調整ページ作成画面に戻る</a>
-
+</div>
 </body>
 </html>
