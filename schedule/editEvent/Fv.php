@@ -4,7 +4,8 @@ $e_id = $_GET['e_id'];
 require_once( dirname(__FILE__)."/../../model/getValues.php" );
 ?>
 
-<html>
+<!doctype HTML>
+<HTML lang="ja">
 <head>
 	<TITLE>日程調整ページ編集画面</TITLE>
 	<meta name="viewport" content="width=device-width,maximum-scale=1"/>

@@ -1,4 +1,5 @@
-<html>
+<!doctype HTML>
+<HTML lang="ja">
 <head>
   <meta name="viewport" content="width=device-width,maximum-scale=1"/>
 	<TITLE>エラー</TITLE>

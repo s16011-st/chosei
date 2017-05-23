@@ -3,7 +3,8 @@
 $e_id = $_GET['e_id'];
 require_once( dirname(__FILE__)."/model/getValues.php" );
 ?>
-<HTML>
+<!doctype HTML>
+<HTML lang="ja">
 <HEAD>
 	<TITLE>出欠都合新規入力</TITLE>
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">

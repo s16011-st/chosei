@@ -7,7 +7,8 @@ $p_t_tsugo = $_SESSION['p_t_tsugo'];
 $p_id = $_GET['p_id'];
 ?>
 
-<HTML>
+<!doctype HTML>
+<HTML lang="ja">
 <HEAD>
 	<TITLE>出欠都合新規入力</TITLE>
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
