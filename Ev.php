@@ -10,9 +10,9 @@ $p_id = $_GET['p_id'];
 <!doctype HTML>
 <HTML lang="ja">
 <HEAD>
-	<TITLE>出欠都合新規入力</TITLE>
+	<?php readfile( dirname(__FILE__)."/src/header.html" ); ?>
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
-	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
+	<TITLE>出欠都合新規入力</TITLE>
 </HEAD>
 <BODY>
 	回答者数：<?php echo $ninzu; ?>人

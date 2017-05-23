@@ -1,9 +1,9 @@
 <!doctype HTML>
 <HTML lang="ja">
 <head>
-  <meta name="viewport" content="width=device-width,maximum-scale=1"/>
-	<TITLE>エラー</TITLE>
+	<?php readfile( dirname(__FILE__)."/src/header.html" ); ?>
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
+	<TITLE>エラー</TITLE>
 </head>
 <body>
 

@@ -7,9 +7,9 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 <!doctype HTML>
 <HTML lang="ja">
 <head>
-	<TITLE>日程調整ページ編集画面</TITLE>
-	<meta name="viewport" content="width=device-width,maximum-scale=1"/>
+	<?php readfile( dirname(__FILE__)."/../../src/header.html" ); ?>
 	<LINK href="../../src/style.css" rel="stylesheet" type="text/css">
+	<TITLE>日程調整ページ編集画面</TITLE>
 </head>
 <body>
 	<!--jQueryのインストール-->
