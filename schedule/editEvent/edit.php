@@ -1,5 +1,5 @@
 <?php
-require_once( dirname(__FILE__)."/../../model.php" );
+require_once( dirname(__FILE__)."/../../model/model.php" );
 $e_id = $_GET['e_id'];
 $proc = $_GET['proc'];
 $e_data = getEventData( $e_id );
