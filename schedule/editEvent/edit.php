@@ -16,13 +16,19 @@ if( $_COOKIE[$e_id] === $e_data[0]["organizer_id"] ) {
 			$new_day_time = textToArray( $_POST['new_dates'] );
 		//イベント情報更新
 			updateEvent( $e_id, $new_e_name, $new_e_comment );
-		//候補日程の削除
-			deleteDayTime( $delete_s_id );
 		//候補日程の追加があれば追加
 			if( !empty($new_day_time) ) {
-				$result = addDayTime( $e_id, $new_day_time );
+				$result1 = addDayTime( $e_id, $new_day_time );
 			}
-			header( "Location: ../../s.php?e_id=$e_id&proc=0" );
+		//候補日程の削除があれば削除
+			if( !empty($delete_s_id) ) {
+				$result2 = deleteDayTime( $delete_s_id );
+			}
+			var_dump($new_day_time);
+			var_dump($delete_s_id);
+			echo "<br>",$result1;
+			echo "<br>",$result2;
+//			header( "Location: ../../Cv.php?e_id=$e_id" );
 			break;
 		case '8':
 			if( $result = deleteEvent( $e_id ) ) {

@@ -45,8 +45,8 @@ function organizeEvent( $e_id, $organizer_id, $e_name, $e_comment ) {
 function organizeDayTime( $e_id, $day_time ){
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
 	$sql = 'INSERT INTO t_schedule( e_id, day_time ) VALUES( ?, ? )';
-	$stmt = $mysqli->prepare( $sql );
 	for( $i=0; $i<count($day_time); $i++ ){
+		$stmt = $mysqli->prepare( $sql );
 		$stmt->bind_param( 'ss', $e_id, $day_time[$i] );
 		if( $stmt->execute() ) {
 			$result = "日程調整ページ作成完了";
@@ -94,7 +94,7 @@ function countParticipant( $e_id ) {
 	FROM t_schedule x LEFT OUTER JOIN t_tsugo y
 	ON x.s_id = y.s_id
 	WHERE x.e_id = ?
-	GROUP BY x.s_id';
+	GROUP BY x.s_id ORDER BY x.s_id';
 	$stmt = $mysqli->prepare( $sql );
 	$stmt->bind_param( 's', $e_id );
 	$stmt->execute();
@@ -123,6 +123,45 @@ function getParticipantTsugo( $e_id ) {
 	$stmt->close();
 	$mysqli->close();
 }
+//★★★　内部仕様書変更！　★★★
+//★★★　上の関数を2つに分離　★★★
+//(C,D)参加者を取得
+function getParticipant( $e_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = '
+	SELECT * FROM t_participant WHERE e_id = ? ORDER BY p_id';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 's', $e_id );
+	$stmt->execute();
+	$result = fetch_all( $stmt );
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+//(C,D)参加者の都合を取得
+function getTsugo( $e_id ) {
+	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
+	$sql = '
+	SELECT * FROM t_tsugo WHERE p_id IN(
+		SELECT p_id FROM t_participant WHERE e_id = ?
+		) ORDER BY p_id, s_id';
+	$stmt = $mysqli->prepare( $sql );
+	$stmt->bind_param( 's', $e_id );
+	$stmt->execute();
+	$result = fetch_all( $stmt );
+	return $result;
+	$stmt->close();
+	$mysqli->close();
+}
+
+
+
+
+
+
+
+
+
 
 //★★★　内部仕様書変更！　★★★
 //(D→C)参加者の情報と都合を登録
@@ -167,7 +206,7 @@ function getTheParticipantTsugo( $e_id, $p_id ) {
 	( t_schedule x LEFT OUTER JOIN t_tsugo y USING(s_id))
 	INNER JOIN t_participant z USING(p_id)
 	WHERE x.e_id = ? and y.p_id = ?
-	ORDER BY z.p_id, x.day_time, y.tsugo';
+	ORDER BY y.p_id, y.s_id';
 	$stmt = $mysqli->prepare( $sql );
 	$stmt->bind_param( 'si', $e_id, $p_id );
 	$stmt->execute();
@@ -250,8 +289,8 @@ function deleteDayTime( $s_id ) {
 	$sql1 = 'DELETE FROM t_tsugo WHERE s_id = ?';
 	$sql2 = 'DELETE FROM t_schedule WHERE s_id = ? ';
 
-	$stmt = $mysqli->prepare( $sql1 );
 	for( $i=0; $i<count($s_id); $i++ ){
+		$stmt = $mysqli->prepare( $sql1 );
 		$stmt->bind_param( 'i', $s_id[$i] );
 		if( $stmt->execute() ) {
 			$stmt = $mysqli->prepare( $sql2 );
@@ -274,12 +313,12 @@ function deleteDayTime( $s_id ) {
 function addDayTime( $e_id, $new_day_time ) {
 	$mysqli = new mysqli( 'localhost', 'bteam', 'kickobe', 'chosei_db' );
 	$sql1 = ' INSERT INTO t_schedule( e_id, day_time ) VALUES( ?, ? ) ';
-	$sql2 = ' SELECT s_id FROM t_schedule WHERE e_id = ? ORDER BY s_id DESC LIMIT ? ';
+	$sql2 = ' SELECT s_id FROM ( SELECT * FROM t_schedule WHERE e_id = ? ORDER BY s_id DESC LIMIT ? ) x ORDER BY x.s_id ';
 	$sql3 = ' SELECT p_id FROM t_participant WHERE e_id = ? ';
 	$sql4 = ' INSERT INTO t_tsugo( s_id, p_id, tsugo ) VALUES( ?, ?, "" )';
 
-	$stmt = $mysqli->prepare( $sql1 );
 	for( $i=0; $i<count($new_day_time); $i++ ){
+		$stmt = $mysqli->prepare( $sql1 );
 		$stmt->bind_param( 'ss', $e_id, $new_day_time[$i] );
 		$stmt->execute();
 	}
@@ -291,8 +330,8 @@ function addDayTime( $e_id, $new_day_time ) {
 		$stmt->bind_param( 's', $e_id );
 		if( $stmt->execute() ) {
 			$p_id = fetch_all( $stmt );
-			for( $i=0; $i<count($s_id); $i++ ){
-				for( $j=0; $j<count($p_id); $j++ ){
+			for( $i=0; $i<count($p_id); $i++ ){
+				for( $j=0; $j<count($s_id); $j++ ){
 					$stmt = $mysqli->prepare( $sql4 );
 					$stmt->bind_param( 'ii', $s_id[$j]['s_id'], $p_id[$i]['p_id'] );
 					$stmt->execute();
