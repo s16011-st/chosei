@@ -8,16 +8,13 @@ require_once( dirname(__FILE__)."/model.php" );
 if( $e_data = getEventData( $e_id ) ) {
 	$day_time = getEventDaytime( $e_id );
 	$p_sum = countParticipant( $e_id );
-	$p_tsugo = getParticipantTsugo( $e_id );
+	$participant = getParticipant( $e_id );
+	$p_tsugo = getTsugo( $e_id );
 
-	$ninzu = $p_sum[0]["◯"] + $p_sum[0]["△"] + $p_sum[0]["✕"];
-	//登録者なしのときは値がない（NULL）ので、0を格納する
-	if( !$ninzu ){
-		$ninzu = 0;
-
-	//出欠都合を 3 →◯, 2 →△, 1 →✕, 0 →""に変換
-	} else {
-		for( $i=0; $i<$ninzu*count($day_time); $i++){
+	$ninzu = count( $participant );
+//出欠都合を 3 →◯, 2 →△, 1 →✕, 0 →""に変換
+	if( $ninzu!==0 ){
+		for( $i=0; $i<count($p_tsugo); $i++ ) {
 			if( (int)$p_tsugo[$i]["tsugo"] === 3 ) {
 				$p_tsugo[$i]["tsugo"] = "◯";
 			} else if( (int)$p_tsugo[$i]["tsugo"] === 2 ) {
