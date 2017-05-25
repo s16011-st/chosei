@@ -23,12 +23,8 @@ if( $_COOKIE[$e_id] === $e_data[0]["organizer_id"] ) {
 		//候補日程の削除があれば削除
 			if( !empty($delete_s_id) ) {
 				$result2 = deleteDayTime( $delete_s_id );
-			}
-			var_dump($new_day_time);
-			var_dump($delete_s_id);
-			echo "<br>",$result1;
-			echo "<br>",$result2;
-//			header( "Location: ../../Cv.php?e_id=$e_id" );
+			}												
+			header( "Location: ../../Cv.php?e_id=$e_id" );
 			break;
 		case '8':
 			if( $result = deleteEvent( $e_id ) ) {
