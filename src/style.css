@@ -1,79 +1,57 @@
-
-/*@media screen and (max-width: 320px){
-body{
+body {
 	margin-top: 30px;
 	margin-left: 30px;
 }
-}*/
-
-/*@media only screen and (min-width: 321px){*/
-
-body{
-	margin-left: 50px;
-	background-color:#0ff;
-}
-
-.main{
-	margin-top : 50px;
-	margin-left: 30px;
-	/*text-align : center;*/
-	display:flex;
-	justify-content: center; /*中央揃え*/
-}
-
 p {
-	line-height: 175%;
+	line-height: 150%;
 }
 h4 {
 	margin-bottom: 0px;
+	//text-align: center;
 }
 h3 {
 	line-height: 50%;
 }
 h1 {
-	text-align:center;        
+	margin-top: 5px;
+	padding-bottom: 15px;
 }
 
-
-input,textarea {
-	padding: 5px 10px;
-	width : 300px;
+input {
+	padding: 10px 10px;
+	width: auto;
 }
 textarea {
-	width: 300px;
 	height: 150px;
+	padding: 10px 10px;
+	width: auto;
 }
-input[ type = "radio" ] {
-	-webkit-transform: scale(1.2);
-	transform: scale(1.2);
-	margin-right: 0.5em;
-	/*margin:80%;*/
-}
+//input[ type = "radio" ] {
+//	-webkit-transform: scale(1.2);
+//	transform: scale(1.2);
+//	margin-right: 0.5em;
+//}
 
-table {
-	border-collapse: collapse;
-	border: 3px solid #070;
-	margin-left: auto;	/*テーブルの中央揃え*/
-	margin-right: auto;	/*テーブルの中央揃え*/
-	/*text-align:center;*/
-	/*padding : em;
-	width:100%;*/
-}
-th,td {
-	border: 1px solid #070;
-	text-align: center;
-	height: 30px;
-	width: 80px;
-}
+//table {
+//	border-collapse: collapse;
+//	border: 3px solid #070;
+//}
+//th,td {
+//	border: 1px solid #070;
+//	text-align: center;
+//	height: 30px;
+//	width: 80px;
+//}
 td {
 	height: 40px;
+	text-align:center;
 }
 th {
 	background-color: #ddd;
+	text-align:center;
 }
 .coltsugo {
 	background-color: #ffc;
-
 }
 .colparticipant {
 	background-color: #eff;
@@ -93,12 +71,12 @@ th {
 	padding: 5px;
 	margin-bottom: 5px;
 }
-
 .float{
-	float: left;	 /*みぎにまわりこむ*/
+	float: left;
 	margin-right: 50px;
 }
-.center{
-	text-align:center;
-}
-/*}*/
+
+//.container{
+//	margin-top: 30px;
+//	margin-left: 30px;
+//}

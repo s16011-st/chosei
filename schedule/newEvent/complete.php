@@ -1,34 +1,27 @@
-<html>
-<head>
-        <!-- 旧Av.phpです -->
-        <TITLE>イベント作成</TITLE>
-        <meta name="viewport" content="width=device-width,maximum-scale=1"/>
-        <LINK href="../../src/style.css" rel="stylesheet" type="text/css" />
-</head>
-</html>
-
-
 <?php
-//旧ABc.phpです
-	require_once( '../../model.php' );
-	$e_id = randomId();
-	$organizer_id = randomId();
-	$e_name = $_POST['e_name'];
-	$e_comment = $_POST['e_comment'];
-	$day_time = textToArray( $_POST['dates'] );
-	setcookie( $e_id, $organizer_id, time()+10800, "/chosei/", FALSE );
-	if( $e_name && !empty($day_time) ) {
-		if(
-			organizeEvent( $e_id, $organizer_id, $e_name, $e_comment )
-		) {
-			$message = "日程調整ページ作成完了！　URLは ⇩";
-			$url = "https://(IPアドレス)/chosei/s.php?e_id=".$e_id;
-			organizeDayTime( $e_id, $day_time );
-		}
-	} else {
-		$message = 'えらー。イベント名か日付が空白です。';
-		$url = '';
-	}
-	include( "./Bv.php" );
-	exit();
+//旧Bvです
+//変数を取得するファイルの読み込み
+$e_id = $_GET['e_id'];
+include( dirname(__FILE__)."/../../model/getValues.php" );
 ?>
+
+<!doctype HTML>
+<HTML lang="ja">
+<head>
+	<?php readfile( dirname(__FILE__)."/../../src/header.html" ); ?>
+	<LINK href="../../src/style.css" rel="stylesheet" type="text/css">
+	<TITLE>イベント作成完了</TITLE>
+</head>
+<body>
+<div class="text-center">
+<h1>日程調整ページ作成結果</h1>
+
+<p>日程調整ページ作成完了！　URLは ⇩</p><br>
+<p>https://192.168.202.50/chosei/Cv.php?e_id=<?php echo $e_id; ?></p><br>
+<input type="button" onclick='location.href="../../Cv.php?e_id=<?php echo $e_id; ?>"' value=イベントページを表示 />
+<br><br><br><br>
+
+<a href = "../../index.php">日程調整ページ作成画面に戻る</a>
+</div>
+</body>
+</html>
