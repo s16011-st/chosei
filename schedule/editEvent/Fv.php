@@ -56,7 +56,7 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 <textarea id="date_val" name="new_dates"></textarea>
 </div><br><br>
 
-<input type="button" onclick="location.href='../../s.php?e_id=<?php echo $e_id; ?>&proc=2'" value="戻る" >
+<input type="button" onclick="location.href='../../Cv.php?e_id=<?php echo $e_id; ?>'" value="戻る" >
 <input type="submit" value="編集内容を保存" ><br><br><br>
 </div>
 </div>

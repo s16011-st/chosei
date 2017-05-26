@@ -17,7 +17,7 @@ include( dirname(__FILE__)."/../../model/getValues.php" );
 <h1>日程調整ページ作成結果</h1>
 
 <p>日程調整ページ作成完了！　URLは ⇩</p><br>
-<p>https://192.168.202.50/chosei/Cv.php?e_id=<?php echo $e_id; ?></p><br>
+<p>http://<?php echo $_SERVER["SERVER_ADDR"]; ?>/chosei/Cv.php?e_id=<?php echo $e_id; ?></p><br>
 <input type="button" onclick='location.href="../../Cv.php?e_id=<?php echo $e_id; ?>"' value=イベントページを表示 />
 <br><br><br><br>
 

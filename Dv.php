@@ -10,8 +10,8 @@ include( dirname(__FILE__)."/model/getValues.php" );
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
 	<TITLE>出欠都合新規入力</TITLE>
 </HEAD>
-<div class="container">
 <BODY>
+<div class="container">
 <br><br>
 
 
@@ -77,7 +77,6 @@ include( dirname(__FILE__)."/model/getValues.php" );
 	</FORM>
 
 </div>
-
-</BODY>
 </div>
+</BODY>
 </HTML>

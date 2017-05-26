@@ -11,8 +11,8 @@ include( dirname(__FILE__)."/model/getValues.php" );
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
 	<TITLE>日程調整ページトップ</TITLE>
 </HEAD>
-<div class="container">
 <BODY>
+<div class="container">
 <div class="row">
 <!--イベント名-->
 <h1>&nbsp;<u><?php echo $e_data[0]["e_name"]; ?></u></h1>
@@ -37,6 +37,6 @@ include( dirname(__FILE__)."/model/getValues.php" );
 
 	<input type="button" onclick="location.href='./s.php?e_id=<?php echo $e_id; ?>&proc=1'" value="出欠を入力する" >
 </div>
-</body>
 </div>
+</body>
 </html>
