@@ -1,4 +1,6 @@
+
 <table class="table table-striped table-bordered">
+
 	<tr>
 		<th>都合</th>
 		<?php

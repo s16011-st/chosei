@@ -14,9 +14,11 @@ include( dirname(__FILE__)."/model/getValues.php" );
 <BODY>
 <br><br>
 
+
 <!--イベント名-->
 <h1>&nbsp;<u><?php echo $e_data[0]["e_name"]; ?></u></h1>
 &nbsp;回答者数：<?php echo $ninzu; ?>人
+
 
 <div class="row">
 <div class="float">

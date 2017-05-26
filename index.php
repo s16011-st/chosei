@@ -8,6 +8,7 @@
 </head>
 
 <div class="container">
+
 <body>
 	<!--jQueryのインストール-->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -17,7 +18,6 @@
 	<!--datepickerの設定-->
 	<script src="./src/datepicker.js"></script>
 	<script src="./src/datepicker-ja.js"></script>
-
 	
 	<h1>イベントを作る</h1>
 	<div class=row>

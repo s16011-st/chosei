@@ -25,8 +25,10 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 <h1>イベント編集・削除</h1>
 <FORM action="./edit.php?e_id=<?php echo $e_id; ?>&proc=7" method="post">
 
+
 <div class="row">
 <div class="col-md-4">
+
 <div class="float">
 <h3>イベント名</h3>
 <input type="text" name="new_e_name" value="<?php echo $e_data[0]['e_name']; ?>" required ><br><br>
@@ -59,7 +61,9 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 </div>
 </div>
 
+
 <div class="col-md-4">
+
 <div class="float">
 <h3>イベントの削除<h3>
 <h4 class="delete">イベントを削除する</h4>

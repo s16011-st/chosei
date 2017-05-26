@@ -22,6 +22,7 @@ include( dirname(__FILE__)."/../../model/getValues.php" );
 <br><br><br><br>
 
 <a href = "../../index.php">日程調整ページ作成画面に戻る</a>
+
 </div>
 </body>
 </html>

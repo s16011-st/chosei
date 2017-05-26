@@ -34,6 +34,7 @@ include( dirname(__FILE__)."/model/getValues.php" );
 		<?php include( dirname(__FILE__)."/Table_p.php" ); ?><br>
 	<?php } ?><br>
 
+
 	<input type="button" onclick="location.href='./s.php?e_id=<?php echo $e_id; ?>&proc=1'" value="出欠を入力する" >
 </div>
 </body>
