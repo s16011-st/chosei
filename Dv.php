@@ -10,13 +10,17 @@ include( dirname(__FILE__)."/model/getValues.php" );
 	<LINK href="./src/style.css" rel="stylesheet" type="text/css">
 	<TITLE>出欠都合新規入力</TITLE>
 </HEAD>
+<div class="container">
 <BODY>
 <br><br>
 
-回答者数：<?php echo $ninzu; ?>人
-<!--イベント名-->
-<h1><?php echo $e_data[0]["e_name"]; ?></h1>
 
+<!--イベント名-->
+<h1>&nbsp;<u><?php echo $e_data[0]["e_name"]; ?></u></h1>
+&nbsp;回答者数：<?php echo $ninzu; ?>人
+
+
+<div class="row">
 <div class="float">
 <h3>イベントの詳細説明</h3>
 	<?php echo $e_data[0]["e_comment"]; ?><br><br>
@@ -37,7 +41,7 @@ include( dirname(__FILE__)."/model/getValues.php" );
 	表示に使用する名前を入力してください。<br>
 		<input type="text" name="p_name" required><br><br>
 	<h3>日にち候補</h3>
-	<table>
+	<table class="table table-striped table-borderd">
 		<tr>
 			<th>都合</th>
 			<?php
@@ -75,4 +79,5 @@ include( dirname(__FILE__)."/model/getValues.php" );
 </div>
 
 </BODY>
+</div>
 </HTML>

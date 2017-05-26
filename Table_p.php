@@ -1,4 +1,7 @@
-<table>
+
+<table class="table table-striped table-bordered">
+
+
 	<tr>
 		<th>参加者</th>
 		<?php
@@ -25,3 +28,4 @@
 	</tr>
 	<?php } ?>
 </table>
+

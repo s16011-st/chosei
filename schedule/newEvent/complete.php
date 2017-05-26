@@ -13,7 +13,7 @@ include( dirname(__FILE__)."/../../model/getValues.php" );
 	<TITLE>イベント作成完了</TITLE>
 </head>
 <body>
-
+<div class="text-center">
 <h1>日程調整ページ作成結果</h1>
 
 <p>日程調整ページ作成完了！　URLは ⇩</p><br>
@@ -23,5 +23,6 @@ include( dirname(__FILE__)."/../../model/getValues.php" );
 
 <a href = "../../index.php">日程調整ページ作成画面に戻る</a>
 
+</div>
 </body>
 </html>

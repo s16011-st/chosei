@@ -7,6 +7,8 @@
 	<TITLE>イベント作成</TITLE>
 </head>
 
+<div class="container">
+
 <body>
 	<!--jQueryのインストール-->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -16,23 +18,33 @@
 	<!--datepickerの設定-->
 	<script src="./src/datepicker.js"></script>
 	<script src="./src/datepicker-ja.js"></script>
-
+	
 	<h1>イベントを作る</h1>
+	<div class=row>
 	<FORM action="./schedule/newEvent/create.php" method="post">
-	<div id="datepicker" class="float">
-		<h3>[step1]&nbsp;日にち候補</h3>
-		<textarea id="date_val" name="dates" required></textarea>
-	</div>
-	<div class="float">
-		<h3>[step2]&nbsp;イベント名</h3>
-		<input type="text" name="e_name" required ><br><br>
-	</div>
-	<div class="float">
-		<h3>[step3]&nbsp;メモ</h3>
-		<textarea name="e_comment"></textarea><br><br>
-		<INPUT type="submit" value="イベントを作る">
-	</div>
-	</FORM>
+		<div class=col-md-4>
+		<div id="datepicker" class="float">
+			<h3>[step1]&nbsp;日にち候補</h3>
+			<textarea id="date_val" name="dates" required></textarea>
+		</div>
+		</div>
 
+		<div class=col-md-4>
+		<div class="float">
+			<h3>[step2]&nbsp;イベント名</h3>
+			<input type="text" name="e_name" required ><br><br>
+		</div>
+		</div>
+
+		<div class=col-md-4>
+		<div class="float">
+			<h3>[step3]&nbsp;メモ</h3>
+			<textarea name="e_comment"></textarea><br><br>
+		<INPUT type="submit" value="イベントを作る">
+		</div>
+		</div>
+	</FORM>
+	</div>
 </body>
+</div>
 </html>
