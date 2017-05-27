@@ -13,6 +13,7 @@ include( dirname(__FILE__)."/../../model/getValues.php" );
 	<TITLE>イベント作成完了</TITLE>
 </head>
 <body>
+
 <div class="container">
 <div class="text-center">
 <h1>日程調整ページ作成結果</h1>
@@ -23,7 +24,6 @@ include( dirname(__FILE__)."/../../model/getValues.php" );
 <p>http://<?php echo $_SERVER["SERVER_ADDR"]; ?>/chosei/Cv.php?e_id=<?php echo $e_id; ?></p><br>
 -->
 
-
 <p><input type="text" value="http://<?php echo $_SERVER["SERVER_ADDR"]; ?>/chosei/Cv.php?e_id=<?php echo $e_id; ?>" style="width:80%;" onclick="this.select()"> </p><br>
 
 <input type="button" onclick='location.href="../../Cv.php?e_id=<?php echo $e_id; ?>"' value=イベントページを表示 />
@@ -33,5 +33,6 @@ include( dirname(__FILE__)."/../../model/getValues.php" );
 
 </div>
 </div>
+
 </body>
 </html>
