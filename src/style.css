@@ -9,7 +9,6 @@ p {
 h4 {
 	margin-bottom: 0px;
 	word-wrap:break-word;
-	//text-align: center;
 }
 h3 {
 	line-height: 150%;
@@ -34,6 +33,7 @@ textarea {
 td {
 	height: 40px;
 	text-align:center;
+
 	max-width : 50px;
 	word-wrap:break-word;
 }
@@ -42,7 +42,6 @@ th {
 	max-width : 50px;
 	text-align:center;
 	word-wrap:break-word;
-
 }
 .coltsugo {
 	background-color: #ffc;

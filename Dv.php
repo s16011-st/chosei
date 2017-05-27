@@ -12,6 +12,7 @@ include( dirname(__FILE__)."/model/getValues.php" );
 </HEAD>
 <BODY>
 <div class="container">
+
 <div class="row">
 <br><br>
 
@@ -24,11 +25,13 @@ include( dirname(__FILE__)."/model/getValues.php" );
 <h3>イベントの詳細説明</h3>
 	<p><?php echo $e_data[0]["e_comment"]; ?></p><br><br>
 	<!--参加者の都合に関する2つの表をインクルード-->
+
 <h3>日にち候補</h3>
 <?php include( dirname(__FILE__)."/Table_sum.php" ); ?><br>
 <?php if( $ninzu!==0 ){ ?>
 	<?php include( dirname(__FILE__)."/Table_p.php" ); ?><br>
 <?php } ?><br>
+
 
 	<h3>出欠を入力する</h3>
 	<hr>
@@ -37,7 +40,9 @@ include( dirname(__FILE__)."/model/getValues.php" );
 	表示に使用する名前を入力してください。<br>
 		<input type="text" name="p_name" required><br><br>
 	<h3>日にち候補</h3>
+
 	<table class="table table-striped table-bordered">
+
 		<tr>
 			<th>都合</th>
 			<?php
@@ -65,10 +70,13 @@ include( dirname(__FILE__)."/model/getValues.php" );
 		</tr>
 	</table><br>
 
+
+
 	<h3>コメント</h3>
 		<textarea name="p_comment" ></textarea><br><br>
 		<INPUT type="submit" value="入力する">
 	</FORM>
+</div>
 </div>
 </div>
 </BODY>

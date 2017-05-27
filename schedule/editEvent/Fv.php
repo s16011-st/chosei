@@ -12,6 +12,7 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 	<TITLE>日程調整ページ編集画面</TITLE>
 </head>
 
+
 <body>
 	<!--jQueryのインストール-->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -24,7 +25,9 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 
 <div class="container">
 <h1>イベント編集・削除</h1>
+
 <div class="row">
+
 <FORM action="./edit.php?e_id=<?php echo $e_id; ?>&proc=7" method="post">
 	<div class="col-md-4">
 		<h3>イベント名</h3>
@@ -32,7 +35,6 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 		<h3>詳細説明文</h3>
 		<textarea name="new_e_comment" ><?php echo $e_data[0]["e_comment"] ; ?></textarea><br><br>
 	</div>
-
 	<div class="col-md-4">
 		<h3>候補日程の追加と削除</h3>
 		<h4>削除する候補</h4>
@@ -42,8 +44,10 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 		<p><?php for( $i=0; $i<count($day_time); $i++ ) { ?>
 		&emsp;<input type="checkbox" name="delete_s_id[]" value="<?php echo $day_time[$i]['s_id']; ?>" >
 		&emsp;&emsp;<?php echo $day_time[$i]['day_time']."<br>"; ?></p>
+
 <?php } ?>
 		</div>
+
 
 		<h4>追加する候補</h4>
 		追加したい候補を入力してください。<br>
@@ -63,17 +67,10 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 		<input type="button" onclick="location.href='./edit.php?e_id=<?php echo $e_id; ?>&proc=8'" value="イベント削除" ><br>
 		<p>※一度削除すると復旧はできません。ご注意ください。</p>
 	</div>
+
 </div>
-</div>
-
-<!!!!!!!!!>
-
-
-
-
-
-
 </FORM>
 </div>
 </body>
+</div>
 </html>
