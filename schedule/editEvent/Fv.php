@@ -59,7 +59,7 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 		<p><font color="red">※イベント管理者は、参加者に変更を通知してください。</font></p>
 	</div>
 	</div>
-
+<!---->
 
 	<div class="col-md-4">
 		<h3>イベントの削除<h3>
