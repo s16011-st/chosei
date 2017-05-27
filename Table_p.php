@@ -1,6 +1,6 @@
 
-<table class="table table-striped table-bordered">
 
+<table class="table table-striped table-bordered" >
 
 	<tr>
 		<th>参加者</th>
@@ -25,7 +25,9 @@
 		<td class="p_comment">
 			<?php echo $participant[$i]["p_comment"]; ?>
 		</td>
-	</tr>
 	<?php } ?>
+	</tr>
+
+
 </table>
 

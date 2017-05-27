@@ -25,10 +25,10 @@ include( dirname(__FILE__)."/model/getValues.php" );
 
 <?php } ?><br><br>
 	<h3>イベントの詳細説明</h3>
-		<?php echo $e_data[0]["e_comment"]; ?><br><br>
-
+		<p><?php echo $e_data[0]["e_comment"]; ?></p><br><br>
 	<!--参加者の都合に関する2つの表をインクルード-->
-	<h3>日にち-候補</h3>
+	<h3>日にち候補</h3>
+
 	<?php include( dirname(__FILE__)."/Table_sum.php" ); ?><br>
 	<?php if( $ninzu!==0 ){ ?>
 		<?php include( dirname(__FILE__)."/Table_p.php" ); ?><br>

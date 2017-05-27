@@ -41,7 +41,7 @@ $p_id = $_GET['p_id'];
 	表示に使用する名前を入力してください。<br>
 		<input type="text" name="p_name" value="<?php echo $p_t_tsugo[0]["p_name"]; ?>" required><br><br>
 	<h3>日にち候補</h3>
-	<table>
+	<table class="table table-striped table-borderd">
 		<tr>
 			<th>都合</th>
 			<?php

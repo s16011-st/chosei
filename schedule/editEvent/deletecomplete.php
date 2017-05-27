@@ -2,7 +2,6 @@
 <!doctype HTML>
 
 <HTML lang="ja">
-<div class="text-center">
 
 <head>
 	<?php readfile( dirname(__FILE__)."../../../src/header.html" ); ?>
@@ -12,10 +11,14 @@
 </head>
 <body>
 <div class="container">
+<div class="text-center">
+
 <h3>イベント削除完了</h3>
 イベントが正常に削除されました。<br>
 また新しくイベントを作成したい場合はこちら⇩<br><br>
 <input type="button" onclick="location.href='../../index.php'" value="イベントをつくる" >
+
+</div>
 
 </div>
 </body>
