@@ -1,6 +1,6 @@
 
-<table class="table table-striped table-bordered" >
 
+<table class="table table-striped table-bordered" >
 
 	<tr>
 		<th>参加者</th>
@@ -27,5 +27,7 @@
 		</td>
 	<?php } ?>
 	</tr>
+
+
 </table>
 

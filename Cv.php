@@ -28,6 +28,7 @@ include( dirname(__FILE__)."/model/getValues.php" );
 		<p><?php echo $e_data[0]["e_comment"]; ?></p><br><br>
 	<!--参加者の都合に関する2つの表をインクルード-->
 	<h3>日にち候補</h3>
+
 	<?php include( dirname(__FILE__)."/Table_sum.php" ); ?><br>
 	<?php if( $ninzu!==0 ){ ?>
 		<?php include( dirname(__FILE__)."/Table_p.php" ); ?><br>
