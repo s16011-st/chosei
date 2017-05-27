@@ -69,11 +69,6 @@ require_once( dirname(__FILE__)."/../../model/getValues.php" );
 	</div>
 
 </div>
-<input type="button" onclick="location.href='../../Cv.php?e_id=<?php echo $e_id; ?>'" value=" 戻る " >&emsp;
-<input type="submit" value="  編集内容を保存  " ><br>
-<p><font color="red">※イベント管理者は、参加者に変更を通知してください。</font></p>
-</div>
-
 </FORM>
 </div>
 </body>
