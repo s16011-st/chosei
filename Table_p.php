@@ -22,7 +22,7 @@
 		<?php for( $j=$i*count($day_time); $j<($i+1)*count($day_time); $j++ ){
 			echo "<td>".$p_tsugo[$j]["tsugo"]."</td>";
 		} ?>
-		<td class="p_comment">
+		<td>
 			<?php echo $participant[$i]["p_comment"]; ?>
 		</td>
 	<?php } ?>
@@ -30,4 +30,3 @@
 
 
 </table>
-
