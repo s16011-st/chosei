@@ -18,11 +18,11 @@
 	<!--datepickerの設定-->
 	<script src="./src/datepicker.js"></script>
 	<script src="./src/datepicker-ja.js"></script>
-	
+
 	<h1>イベントを作る</h1>
-	<div class=row>
+	<div class="row">
 	<FORM action="./schedule/newEvent/create.php" method="post">
-		<div class=col-md-4>
+		<div class="col-md-4">
 
 		<div id="datepicker" >
 			<h3>[step1]&nbsp;日にち候補</h3>
@@ -30,13 +30,13 @@
 		</div>
 		</div>
 
-		<div class=col-md-4>
+		<div class="col-md-4">
 
 			<h3>[step2]&nbsp;イベント名</h3>
 			<input type="text" name="e_name" required ><br><br>
 		</div>
 
-		<div class=col-md-4>
+		<div class="col-md-4">
 
 			<h3>[step3]&nbsp;メモ</h3>
 			<textarea name="e_comment"></textarea><br><br>
