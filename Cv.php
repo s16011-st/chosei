@@ -15,8 +15,8 @@ include( dirname(__FILE__)."/model/getValues.php" );
 <div class="container">
 <div class="row">
 <!--イベント名-->
-<h1>&nbsp;<u><?php echo $e_data[0]["e_name"]; ?></u></h1>
-&emsp;&emsp;回答者数：<?php echo $ninzu; ?>人
+<h1><u><?php echo $e_data[0]["e_name"]; ?></u></h1>
+回答者数：<?php echo $ninzu; ?>人
 
 <!--クッキーに保存したイベントページ作成者番号と一致したら表示するボタン-->
 <?php if( $_COOKIE[$e_id] === $e_data[0]["organizer_id"] ) { ?>

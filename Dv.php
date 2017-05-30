@@ -14,12 +14,9 @@ include( dirname(__FILE__)."/model/getValues.php" );
 <div class="container">
 
 <div class="row">
-<br><br>
-
-
 <!--イベント名-->
-<h1>&nbsp;<u><?php echo $e_data[0]["e_name"]; ?></u></h1>
-&nbsp;回答者数：<?php echo $ninzu; ?>人
+<h1><u><?php echo $e_data[0]["e_name"]; ?></u></h1>
+回答者数：<?php echo $ninzu; ?>人
 
 
 <h3>イベントの詳細説明</h3>
